@@ -47,43 +47,93 @@ const CT: React.FC<CTProps> = ({
   return (
     <section className={`min-h-screen flex items-center justify-center bg-gray-50 ${inter.className}`}>
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-6">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <motion.h2 
+            className="text-4xl md:text-5xl font-light text-gray-900 mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             {title}
-          </h2>
-          <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-12">
+          </motion.h2>
+          <motion.p 
+            className="text-gray-600 text-lg max-w-3xl mx-auto mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             {subtitle}
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="relative py-20 overflow-hidden flex items-center justify-center">
-          <div
+        <motion.div 
+          className="relative py-20 overflow-hidden flex items-center justify-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <motion.div
             className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-120 h-120 bg-center bg-no-repeat bg-contain"
             style={{ backgroundImage: 'url(/assets/landing/ct-images/circle-bg.png)' }}
+            initial={{ opacity: 0, rotate: -10 }}
+            whileInView={{ opacity: 1, rotate: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.0, delay: 0.8 }}
           />
 
           <motion.div
             className="flex items-center gap-6 w-max"
-            initial={{ x: 0 }}
+            initial={{ x: 0, opacity: 0 }}
+            whileInView={{ x: '-50%', opacity: 1 }}
+            viewport={{ once: true }}
             animate={{ x: '-50%' }}
             transition={{
-              duration: 40,
-              ease: 'linear',
-              repeat: Infinity
+              x: { duration: 20, ease: 'linear', repeat: Infinity },
+              opacity: { duration: 0.8, delay: 1.0 }
             }}
           >
             {loopUsers.map((user, index) => (
-              <div key={`${user.name}-${index}`} className="shrink-0">
+              <motion.div 
+                key={`${user.name}-${index}`} 
+                className="shrink-0"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: 1.2 + (index * 0.05),
+                  ease: "easeOut"
+                }}
+                whileHover={{ scale: 1.1, y: -5 }}
+              >
                 <div className="relative">
                   <img
                     src={user.image}
                     alt={user.name}
-                    className="w-16 h-16 md:w-20 md:h-20 rounded-xl object-cover shadow-lg"
+                    className="w-16 h-16 md:w-20 md:h-20 rounded-xl object-cover shadow-lg transition-shadow duration-300 hover:shadow-xl"
                   />
-                  <div
+                  <motion.div
                     className={`absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center ${
                       user.verified ? 'bg-green-500' : 'bg-red-500'
                     }`}
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ 
+                      duration: 0.3, 
+                      delay: 1.4 + (index * 0.05),
+                      type: "spring",
+                      stiffness: 300
+                    }}
                   >
                     {user.verified ? (
                       <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -94,21 +144,29 @@ const CT: React.FC<CTProps> = ({
                         <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                       </svg>
                     )}
-                  </div>
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
-        </div>
+        </motion.div>
 
-        <div className="text-center mt-16">
-          <button
+        <motion.div 
+          className="text-center mt-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 1.6 }}
+        >
+          <motion.button
             onClick={onButtonClick}
             className="bg-gray-900 text-white px-8 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors inline-flex items-center"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             {buttonText}
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
       </div>
     </section>
   )
