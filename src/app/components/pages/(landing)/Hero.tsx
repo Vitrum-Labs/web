@@ -4,16 +4,16 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 interface HeroProps {
-  title: string;
-  subtitle: string;
-  buttonText: string;
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
   onButtonClick?: () => void;
 }
 
 const Hero: React.FC<HeroProps> = ({
-  title,
-  subtitle,
-  buttonText,
+  title = "The Onchain Identity & Reputation on Arbitrum",
+  subtitle = "We help you grow your onchain reputation through transparent blockchain-based activities on the Arbitrum network.",
+  buttonText = "Get Started",
   onButtonClick,
 }) => {
   return (
