@@ -1,6 +1,8 @@
 'use client'
 import { JetBrains_Mono } from 'next/font/google'
 import { motion } from 'framer-motion'
+import Lottie from 'lottie-react'
+import animationData from '../../../../../public/assets/landing/animation/MCpepe.json'
 
 const mono = JetBrains_Mono({ subsets: ['latin'] })
 
@@ -38,7 +40,7 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.7 }}
             >
-              See If Your{' '}
+              Think Your{' '}
             </motion.span>
             <motion.span 
               className="text-gray-600"
@@ -51,13 +53,27 @@ export default function Footer() {
             </motion.span>
             <br />
             <motion.span 
-              className="text-gray-600"
+              className="text-gray-600 inline-flex items-center gap-3"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 1.1 }}
             >
-              Vote
+              Vote? Prove It
+              <motion.div
+                className="w-8 h-8"
+                initial={{ opacity: 0, scale: 0 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 1.3 }}
+              >
+                <Lottie 
+                  animationData={animationData} 
+                  loop={true}
+                  autoplay={true}
+                  className='w-10 h-10 mt-[-4]'
+                />
+              </motion.div>
             </motion.span>
           </motion.h1>
           
