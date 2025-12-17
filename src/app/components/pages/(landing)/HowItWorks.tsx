@@ -1,5 +1,5 @@
 "use client";
-import { JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Inter } from "next/font/google";
 import {
   FaShieldAlt,
   FaVoteYea,
@@ -11,6 +11,7 @@ import {
 import { IconType } from "react-icons";
 
 const mono = JetBrains_Mono({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 
 interface Step {
   title: string;
@@ -64,7 +65,7 @@ const rightSteps: Step[] = [
 export default function HowItWorks() {
   return (
     <section
-      className={`min-h-screen relative py-32 bg-[#f6f6f6] ${mono.className}`}
+      className={`min-h-screen relative py-32 bg-gray-50 ${mono.className}`}
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
@@ -78,7 +79,12 @@ export default function HowItWorks() {
 
         <div className="relative flex items-center justify-center">
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-[900px] h-[900px] rounded-[80px] border border-dashed border-gray-300" />
+            <div className="relative w-200 h-180 mb-15 rounded-[80px]">
+              <div className="absolute inset-0 border border-dashed border-gray-300 rounded-[80px]" />
+              <div
+                className="absolute inset-0 border-2 border-blue-500 rounded-[80px] opacity-0 animate-border-highlight"
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-[1fr_auto_1fr] gap-24 relative z-10">
@@ -96,6 +102,18 @@ export default function HowItWorks() {
               ))}
             </div>
           </div>
+        </div>
+
+        <div className={`text-center mt-16 text-black text-2xl font-light ${inter.className}`}>
+          Vote{' '}
+          <span className="inline-flex items-center text-lg py-1 px-3 rounded-lg border border-blue-500 text-blue-500 font-medium hover:bg-blue-600 hover:text-white transition cursor-pointer">
+            Bullish
+          </span>{' '}
+          or{' '}
+          <span className="inline-flex items-center text-lg py-1 px-3 rounded-lg border border-red-500 text-red-500 font-medium hover:bg-red-600 hover:text-white transition cursor-pointer">
+            Bearish
+          </span>{' '}
+          for your Crypto Twitter.
         </div>
       </div>
     </section>
@@ -120,7 +138,14 @@ function Card({ step, align }: { step: Step; align: "left" | "right" }) {
 }
 
 function Connector() {
-  return <div className="w-14 h-px border-t border-dashed border-gray-300" />;
+  return (
+    <div className="relative w-14 h-px overflow-hidden">
+      <div className="absolute inset-0 border-t border-dashed border-gray-300" />
+      <div
+        className="absolute inset-0 border-t-2 border-blue-500 opacity-0 animate-dash-highlight"
+      />
+    </div>
+  );
 }
 
 function CenterCard() {
@@ -139,14 +164,10 @@ function CenterCard() {
           <div className="h-2 w-40 bg-gray-200 rounded" />
         </div>
         <div className="flex gap-3">
-          <button
-            className="flex-1 py-3 rounded-xl bg-gradient-to-b from-[#6F8FFF] via-[#5A7BFF] to-[#4A66F0] text-white font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_8px_20px_rgba(79,102,240,0.35)] hover:brightness-105 transition"
-          >
+          <button className="flex-1 py-3 rounded-xl bg-linear-to-b from-[#6F8FFF] via-[#5A7BFF] to-[#4A66F0] text-white font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_8px_20px_rgba(79,102,240,0.35)] hover:brightness-105 transition">
             Bullish
           </button>
-          <button
-            className="flex-1 py-3 rounded-xl bg-linear-to-b from-[#FF6F6F] via-[#FF5A5A] to-[#F04A4A] text-white font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_8px_20px_rgba(240,74,74,0.35)] hover:brightness-105 transition"
-          >
+          <button className="flex-1 py-3 rounded-xl bg-linear-to-b from-[#FF6F6F] via-[#FF5A5A] to-[#F04A4A] text-white font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_8px_20px_rgba(240,74,74,0.35)] hover:brightness-105 transition">
             Bearish
           </button>
         </div>

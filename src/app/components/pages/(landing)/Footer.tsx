@@ -6,7 +6,7 @@ const mono = JetBrains_Mono({ subsets: ['latin'] })
 export default function Footer() {
   return (
     <section 
-      className={`min-h-screen flex items-center bg-white justify-center p-12 ${mono.className}`}
+      className={`min-h-screen flex items-center bg-gray-50 justify-center p-12 ${mono.className}`}
     >
       <div
         className="w-full max-w-9xl h-200 bg-cover bg-center bg-no-repeat rounded-4xl flex items-center justify-center"
