@@ -1,6 +1,7 @@
 "use client";
 import { Inter } from "next/font/google";
 import { motion } from "framer-motion";
+import Link from "next/dist/client/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +15,7 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({
   title = "The Onchain Identity & Reputation on Arbitrum",
   subtitle = "We help you grow your onchain reputation through transparent blockchain-based activities on the Arbitrum network.",
-  buttonText = "Get Started",
+  buttonText = "Launch App",
   onButtonClick,
 }) => {
   return (
@@ -23,13 +24,13 @@ const Hero: React.FC<HeroProps> = ({
       style={{ backgroundImage: "url(/assets/landing/hero/bg-hero.png)" }}
     >
       <div className="text-center px-6 max-w-4xl mx-auto">
-        <motion.div 
+        <motion.div
           className="mb-8"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <motion.p 
+          <motion.p
             className="text-white text-sm mb-4 tracking-wide uppercase opacity-80"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 0.8, y: 0 }}
@@ -37,7 +38,7 @@ const Hero: React.FC<HeroProps> = ({
           >
             Don't trust Crypto Twitter, Verify.
           </motion.p>
-          <motion.h1 
+          <motion.h1
             className="text-5xl md:text-6xl font-light text-white mb-6"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -45,28 +46,28 @@ const Hero: React.FC<HeroProps> = ({
           >
             {title.split(" ").map((word, index) =>
               index === title.split(" ").length - 1 ? (
-                <motion.span 
-                  key={index} 
+                <motion.span
+                  key={index}
                   className="italic"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.8 + (index * 0.1) }}
+                  transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
                 >
                   {word}
                 </motion.span>
               ) : (
-                <motion.span 
+                <motion.span
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.6 + (index * 0.1) }}
+                  transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                 >
                   {word}{" "}
                 </motion.span>
               )
             )}
           </motion.h1>
-          <motion.p 
+          <motion.p
             className="text-white text-lg max-w-2xl mx-auto mb-8 opacity-90"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 0.9, y: 0 }}
@@ -75,17 +76,19 @@ const Hero: React.FC<HeroProps> = ({
             {subtitle}
           </motion.p>
         </motion.div>
-        <motion.button
-          onClick={onButtonClick}
-          className="bg-white text-gray-900 px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors duration-300"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          {buttonText}
-        </motion.button>
+        <Link href="/app/dashboard">
+          <motion.button
+            onClick={onButtonClick}
+            className="bg-white text-gray-900 px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors duration-300 cursor-pointer"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {buttonText}
+          </motion.button>
+        </Link>
       </div>
     </section>
   );
