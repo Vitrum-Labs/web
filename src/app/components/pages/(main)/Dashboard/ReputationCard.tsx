@@ -2,16 +2,7 @@
 
 import { FC } from "react";
 import { FaChartLine, FaClock, FaArrowTrendUp } from "react-icons/fa6";
-
-interface ReputationCardProps {
-  score: number;
-  maxScore: number;
-  rank: string;
-  userPercentile: number;
-  walletAge?: string;
-  txCount?: number;
-  nextTierProgress?: number;
-}
+import { ReputationCardProps } from "./types";
 
 const ReputationCard: FC<ReputationCardProps> = ({
   score = 1000,

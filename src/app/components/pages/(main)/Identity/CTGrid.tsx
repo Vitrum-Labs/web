@@ -2,15 +2,7 @@
 
 import { FC } from "react";
 import CTCard from "./CTCard";
-
-interface CTInfluencer {
-  id: string;
-  name: string;
-  image: string;
-  bullishPercentage: number;
-  bearishPercentage: number;
-  sentiment: "Bullish" | "Bearish";
-}
+import { CTInfluencer } from "../../../../types/domain";
 
 const CTGrid: FC = () => {
   const influencers: CTInfluencer[] = [

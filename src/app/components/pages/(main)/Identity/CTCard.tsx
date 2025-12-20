@@ -2,14 +2,7 @@
 
 import { FC, useState } from "react";
 import Image from "next/image";
-
-interface CTCardProps {
-  name: string;
-  image: string;
-  bullishPercentage: number;
-  bearishPercentage: number;
-  sentiment: "Bullish" | "Bearish";
-}
+import { CTCardProps } from "./types";
 
 const CTCard: FC<CTCardProps> = ({
   name,

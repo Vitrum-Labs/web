@@ -1,19 +1,9 @@
 "use client";
 
-import { FC, JSX } from "react";
+import { FC } from "react";
 import { FaGift, FaUsers, FaLock } from "react-icons/fa";
-
-interface ActionCard {
-  icon: JSX.Element;
-  title: string;
-  description: string;
-  buttonText: string;
-  unlocked: boolean;
-}
-
-interface ReputationGatedActionsProps {
-  actions?: ActionCard[];
-}
+import { ReputationGatedActionsProps } from "./types";
+import { ActionCard } from "../../../../types/domain";
 
 const ReputationGatedActions: FC<ReputationGatedActionsProps> = ({ actions }) => {
   const defaultActions: ActionCard[] = [

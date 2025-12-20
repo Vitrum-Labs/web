@@ -4,10 +4,7 @@ import { FC } from "react";
 import Navbar from "../../../ui/Navbar";
 import IdentityHero from "./IdentityHero";
 import CTGrid from "./CTGrid";
-
-interface IdentityProps {
-  walletAddress?: string;
-}
+import { IdentityProps } from "./types";
 
 const Identity: FC<IdentityProps> = ({
   walletAddress = "0X123....890",

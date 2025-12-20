@@ -2,11 +2,7 @@
 
 import { FC } from "react";
 import { FaFingerprint } from "react-icons/fa";
-
-interface VitrumIdentityProps {
-  title?: string;
-  description?: string;
-}
+import { VitrumIdentityProps } from "./types";
 
 const VitrumIdentity: FC<VitrumIdentityProps> = ({
   title = "Vitrum Identity",

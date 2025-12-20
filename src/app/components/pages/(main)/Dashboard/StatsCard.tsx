@@ -2,12 +2,7 @@
 
 import { FC } from "react";
 import { FaClock, FaHashtag } from "react-icons/fa";
-
-interface StatsCardProps {
-  walletAge: string;
-  txCount: number;
-  nextTierProgress: number;
-}
+import { StatsCardProps } from "./types";
 
 const StatsCard: FC<StatsCardProps> = ({
   walletAge = "2.4 Years",

@@ -2,11 +2,7 @@
 
 import { FC } from "react";
 import Image from "next/image";
-
-interface IdentityHeroProps {
-  percentage?: number;
-  sentiment?: "Bullish" | "Bearish";
-}
+import { IdentityHeroProps } from "./types";
 
 const IdentityHero: FC<IdentityHeroProps> = ({
   percentage = 74,

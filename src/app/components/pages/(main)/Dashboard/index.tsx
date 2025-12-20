@@ -5,11 +5,7 @@ import Navbar from "../../../ui/Navbar";
 import ReputationCard from "./ReputationCard";
 import VitrumIdentity from "./VitrumIdentity";
 import ReputationGatedActions from "./ReputationGatedActions";
-
-interface DashboardProps {
-  walletAddress?: string;
-  userName?: string;
-}
+import { DashboardProps } from "./types";
 
 const Dashboard: FC<DashboardProps> = ({
   walletAddress = "0X123....890",
