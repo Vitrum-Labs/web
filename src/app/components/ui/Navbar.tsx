@@ -2,17 +2,20 @@
 
 import { FC } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 interface NavbarProps {
   walletAddress?: string;
 }
 
 const Navbar: FC<NavbarProps> = ({ walletAddress = "0X123....890" }) => {
+  const pathname = usePathname();
+  
   const navItems = [
-    { label: "Dashboard", href: "/dashboard", active: true },
-    { label: "Identity", href: "/identity", active: false },
-    { label: "Ecosystem", href: "/ecosystem", active: false },
-    { label: "Docs", href: "/docs", active: false },
+    { label: "Dashboard", href: "/app/dashboard" },
+    { label: "Identity", href: "/app/identity" },
+    { label: "Ecosystem", href: "/app/ecosystem" },
+    { label: "Docs", href: "/app/docs" },
   ];
 
   return (
@@ -34,7 +37,7 @@ const Navbar: FC<NavbarProps> = ({ walletAddress = "0X123....890" }) => {
               key={item.label}
               href={item.href}
               className={`text-sm font-medium transition-colors ${
-                item.active
+                pathname === item.href
                   ? "text-white"
                   : "text-gray-400 hover:text-white"
               }`}
