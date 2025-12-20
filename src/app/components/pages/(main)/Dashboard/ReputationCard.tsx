@@ -33,8 +33,8 @@ const ReputationCard: FC<ReputationCardProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-5">
         <div className="lg:col-span-3">
           <div className="flex items-center space-x-2 mb-6">
-            <FaChartLine className="text-gray-400 w-4 h-4" />
-            <span className="text-gray-400 text-sm font-medium">
+            <FaChartLine className="text-[#898989] w-4 h-4" />
+            <span className="text-[#898989] text-sm font-medium">
               REPUTATION SCORE
             </span>
           </div>
