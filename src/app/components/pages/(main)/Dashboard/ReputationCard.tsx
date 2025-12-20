@@ -26,7 +26,7 @@ const ReputationCard: FC<ReputationCardProps> = ({
     <div
       className="border rounded-3xl p-8 relative overflow-hidden"
       style={{
-        backgroundColor: "#171717",
+        background: "linear-gradient(135deg, #1F1F1F 0%, #171717 50%, #0F0F0F 100%)",
         borderColor: "#323232",
       }}
     >
