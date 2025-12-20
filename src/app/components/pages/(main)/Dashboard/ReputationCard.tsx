@@ -76,7 +76,7 @@ const ReputationCard: FC<ReputationCardProps> = ({
             }}
           >
             <div className="flex items-center space-x-2 mb-2">
-              <FaClock className="w-4 h-4" style={{ color: "#898989" }} />
+              <FaClock className="w-3 h-3" style={{ color: "#898989" }} />
               <span className="text-gray-400 text-xs">Wallet Age</span>
             </div>
             <div className="text-md font-bold text-white">{walletAge}</div>
@@ -92,7 +92,7 @@ const ReputationCard: FC<ReputationCardProps> = ({
           >
             <div className="flex items-center space-x-2 mb-2">
               <FaArrowTrendUp
-                className="w-4 h-4"
+                className="w-3 h-3"
                 style={{ color: "#898989" }}
               />
               <span className="text-gray-400 text-xs">Tx Count</span>
