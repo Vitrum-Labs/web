@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import Link from "next/dist/client/link";
 import { Inter } from "next/font/google";
+import { LineShadowText } from "@/components/ui/line-shadow-text";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,7 +46,16 @@ const Hero: React.FC<HeroProps> = ({
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             {title.split(" ").map((word, index) =>
-              index === title.split(" ").length - 1 ? (
+              word === "Arbitrum" ? (
+                <motion.span
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
+                >
+                  <LineShadowText>{word}</LineShadowText>{" "}
+                </motion.span>
+              ) : index === title.split(" ").length - 1 ? (
                 <motion.span
                   key={index}
                   className="italic"
@@ -64,7 +74,7 @@ const Hero: React.FC<HeroProps> = ({
                 >
                   {word}{" "}
                 </motion.span>
-              ),
+              )
             )}
           </motion.h1>
           <motion.p
