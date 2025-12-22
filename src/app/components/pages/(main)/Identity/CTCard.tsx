@@ -5,6 +5,7 @@ import Image from "next/image";
 import { CTCardProps } from "./types";
 
 const CTCard: FC<CTCardProps> = ({
+  id,
   name,
   image,
   bullishPercentage,
@@ -60,27 +61,36 @@ const CTCard: FC<CTCardProps> = ({
         </div>
       </div>
 
-      <div className="flex space-x-2">
-        <button
-          onClick={() => handleVote("Bullish")}
-          className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
-            userVote === "Bullish" 
-              ? 'bg-green-600 text-white' 
-              : 'bg-green-900/30 text-green-400 hover:bg-green-900/50'
-          }`}
-        >
-          🐂 Bullish
-        </button>
+      <div className="space-y-2">
+        <div className="flex space-x-2">
+          <button
+            onClick={() => handleVote("Bullish")}
+            className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
+              userVote === "Bullish" 
+                ? 'bg-green-600 text-white' 
+                : 'bg-green-900/30 text-green-400 hover:bg-green-900/50'
+            }`}
+          >
+            🐂 Bullish
+          </button>
+          
+          <button
+            onClick={() => handleVote("Bearish")}
+            className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
+              userVote === "Bearish" 
+                ? 'bg-red-600 text-white' 
+                : 'bg-red-900/30 text-red-400 hover:bg-red-900/50'
+            }`}
+          >
+            🐻 Bearish
+          </button>
+        </div>
         
         <button
-          onClick={() => handleVote("Bearish")}
-          className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
-            userVote === "Bearish" 
-              ? 'bg-red-600 text-white' 
-              : 'bg-red-900/30 text-red-400 hover:bg-red-900/50'
-          }`}
+          onClick={() => window.location.href = `/app/identity/${id}`}
+          className="w-full py-2 px-3 rounded-lg text-sm font-medium bg-gray-800 text-gray-300 hover:bg-gray-700 transition-colors"
         >
-          🐻 Bearish
+          View Details
         </button>
       </div>
 

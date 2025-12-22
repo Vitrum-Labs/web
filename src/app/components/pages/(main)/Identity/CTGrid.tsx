@@ -64,6 +64,7 @@ const CTGrid: FC = () => {
         {influencers.map((influencer) => (
           <CTCard
             key={influencer.id}
+            id={influencer.id}
             name={influencer.name}
             image={influencer.image}
             bullishPercentage={influencer.bullishPercentage}

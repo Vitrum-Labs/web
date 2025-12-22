@@ -14,8 +14,7 @@ const Navbar: FC<NavbarProps> = ({ walletAddress = "0X123....890" }) => {
   const navItems = [
     { label: "Dashboard", href: "/app/dashboard" },
     { label: "Identity", href: "/app/identity" },
-    { label: "Ecosystem", href: "/app/ecosystem" },
-    { label: "Docs", href: "/app/docs" },
+    { label: "Profile", href: "/app/profile" },
   ];
 
   return (
