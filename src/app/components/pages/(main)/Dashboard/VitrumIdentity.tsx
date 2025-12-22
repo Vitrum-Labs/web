@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { FaFingerprint } from "react-icons/fa";
 import type { VitrumIdentityProps } from "./types";
+import Link from "next/link";
 
 const VitrumIdentity: FC<VitrumIdentityProps> = ({
   title = "Vitrum Identity",
@@ -42,15 +43,13 @@ const VitrumIdentity: FC<VitrumIdentityProps> = ({
 
       <div className="flex-1"></div>
 
-      <button
-        className="w-full font-medium py-4 px-4 rounded-lg transition-colors mt-auto"
-        style={{
-          backgroundColor: "#434343",
-          color: "#FFFFFF",
-        }}
-      >
-        Join Campaign
-      </button>
+      <Link href="/app/profile">
+        <button
+          className="w-full font-medium py-4 px-4 rounded-lg transition-colors mt-auto bg-white hover:bg-gray-200 text-black cursor-pointer"
+        >
+          Mint NFT
+        </button>
+      </Link>
     </div>
   );
 };

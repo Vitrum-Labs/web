@@ -2,12 +2,11 @@
 
 import type { FC } from "react";
 import type { NFTGridProps } from "./Profiletypes";
+import NFTCard from "./NFTCard";
+import { useReputationQuick } from "../../../../../lib/hooks/useReputationQuick";
 
-const NFTGrid: FC<NFTGridProps> = ({ nftCount = 6 }) => {
-  const nftItems = Array.from({ length: nftCount }, (_, i) => ({
-    id: `nft-${Math.random().toString(36).slice(2, 9)}-${i}`,
-    index: i,
-  }));
+const NFTGrid: FC<NFTGridProps> = ({ nftCount = 1 }) => {
+  const { data: reputationData, isLoading, error } = useReputationQuick();
 
   return (
     <div
@@ -17,20 +16,19 @@ const NFTGrid: FC<NFTGridProps> = ({ nftCount = 6 }) => {
         borderColor: "#323232",
       }}
     >
-      <h2 className="text-xl font-bold text-white mb-6">
+      <h2 className="text-xl font-bold text-white mb-6 flex items-center justify-center">
         Onchain Reputation Score NFT
       </h2>
 
-      <div className="grid grid-cols-3 gap-4">
-        {nftItems.map((nft) => (
-          <div
-            key={nft.id}
-            className="aspect-square rounded-lg border border-gray-600 flex items-center justify-center"
-            style={{ backgroundColor: "#2A2A2A" }}
-          >
-            <span className="text-gray-400 text-lg font-medium">NFT</span>
-          </div>
-        ))}
+      <div className="flex justify-center">
+        <div className="max-w-md w-full">
+          <NFTCard
+            reputationScore={reputationData?.score || 0}
+            maxScore={1000}
+            onMintNFT={() => console.log('Mint NFT clicked')}
+            isLoading={isLoading}
+          />
+        </div>
       </div>
     </div>
   );

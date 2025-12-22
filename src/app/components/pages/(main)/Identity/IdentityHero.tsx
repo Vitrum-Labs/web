@@ -36,6 +36,22 @@ const IdentityHero: FC<IdentityHeroProps> = ({
           </div>
         </div>
 
+        <div className="absolute -top-8 right-16 opacity-15">
+          <div className="relative">
+            <div className="absolute inset-0 bg-red-500 opacity-20 blur-xl rounded-full"></div>
+            <Image
+              src="/assets/logo/bear-logo.png"
+              alt="Bear Logo"
+              width={350}
+              height={350}
+              className="object-contain relative z-10 filter drop-shadow-lg scale-x-[-1]"
+              style={{
+                filter: "drop-shadow(0 0 20px rgba(239, 68, 68, 0.4))",
+              }}
+            />
+          </div>
+        </div>
+
         <div className="relative z-10">
           <div className="flex items-center space-x-3 mb-6">
             <div className="flex items-center space-x-2">

@@ -10,7 +10,7 @@ const Navbar: FC = () => {
 
   const navItems = [
     { label: "Dashboard", href: "/app/dashboard" },
-    { label: "Identity", href: "/app/identity" },
+    { label: "Vote", href: "/app/identity" },
     { label: "Profile", href: "/app/profile" },
   ];
 

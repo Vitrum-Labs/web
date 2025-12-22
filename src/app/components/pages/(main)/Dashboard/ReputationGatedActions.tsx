@@ -14,7 +14,7 @@ const ReputationGatedActions: FC<ReputationGatedActionsProps> = ({
       title: "Claim Early Adopter NFT",
       description: "Exclusive reward for users with > 500 reputation.",
       buttonText: "Claim Reward",
-      unlocked: true,
+      unlocked: false,
     },
     {
       icon: <FaUsers className="w-6 h-6" />,
@@ -85,8 +85,8 @@ const ReputationGatedActions: FC<ReputationGatedActionsProps> = ({
               <button
                 className="w-full font-medium py-3 px-4 rounded-lg transition-colors"
                 style={{
-                  backgroundColor: "#FFFFFF",
-                  color: "#000000",
+                  backgroundColor: action.unlocked ? "#FFFFFF" : "#4A4A4A",
+                  color: action.unlocked ? "#000000" : "#898989",
                 }}
                 disabled={!action.unlocked}
               >
