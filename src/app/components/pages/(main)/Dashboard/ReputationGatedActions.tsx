@@ -29,7 +29,7 @@ const ReputationGatedActions: FC<ReputationGatedActionsProps> = ({
 
   return (
     <div className="space-y-6 mt-10">
-      <h2 className="text-2xl font-bold text-white mb-3">
+      <h2 className="text-2xl font-bold text-white mb-4">
         Reputation-Gated Actions
       </h2>
 

@@ -16,7 +16,7 @@ const VitrumIdentity: FC<VitrumIdentityProps> = ({
         backgroundColor: "#161616",
         borderColor: "#323232",
         borderWidth: "1px",
-        height: "590px",
+        height: "595px",
       }}
     >
       <div className="flex items-center space-x-4 mb-8">
