@@ -59,8 +59,8 @@ const Dashboard: FC = () => {
             disabled={isLoading}
             className="cursor-pointer flex items-center space-x-2 px-4 py-2 bg-[#171717] border border-[#323232] rounded-lg text-white hover:bg-[#1a1a1a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <FaSync className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`} />
-            <span>Refresh Reputation</span>
+            <FaSync className={`w-3 h-3 ${isLoading ? "animate-spin" : ""}`} />
+            <span className="text-sm">Refresh Reputation</span>
           </button>
         </div>
 

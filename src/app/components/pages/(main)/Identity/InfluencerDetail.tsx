@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { type FC, useMemo, useState } from "react";
+import { useAccount } from "wagmi";
 import {
   FaArrowLeft,
   FaArrowTrendDown,
@@ -13,6 +14,10 @@ import {
 } from "react-icons/fa6";
 import type { CTInfluencer } from "../../../../types/domain";
 import { useInfluencerDetail } from "../../../../../lib/hooks/useInfluencerDetail";
+import { useVoteInfluencer } from "../../../../../lib/hooks/useVoteInfluencer";
+import { useVoteOnInfluencer } from "../../../../../lib/hooks/useVoteOnInfluencer";
+import { useInfluencerStats } from "../../../../../lib/hooks/useInfluencerStats";
+import { useInfluencerReviews } from "../../../../../lib/hooks/useInfluencerReviews";
 import Navbar from "../../../ui/Navbar";
 
 interface InfluencerDetailProps {
@@ -20,12 +25,20 @@ interface InfluencerDetailProps {
 }
 
 const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
+  const { address } = useAccount();
   const [userVote, setUserVote] = useState<"Bullish" | "Bearish" | null>(null);
+  const [comment, setComment] = useState("");
+  const [showVoteForm, setShowVoteForm] = useState(false);
   const { influencer, isLoading, error } = useInfluencerDetail(id);
+  const { submitVote: submitReview, isLoading: isReviewing, error: reviewError } = useVoteInfluencer();
+  const { submitVote: submitVoteOnly, isLoading: isVoting, error: voteError } = useVoteOnInfluencer();
+  const { stats, isLoading: statsLoading, refetch: refetchStats } = useInfluencerStats(id);
+  const { reviews, count: reviewCount, isLoading: reviewsLoading, refetch: refetchReviews } = useInfluencerReviews(id);
 
   const ctInfluencer = useMemo(() => {
     if (!influencer) return null;
-    const bullishPercentage = Math.floor(Math.random() * 40) + 50;
+    
+    const bullishPercentage = stats?.sentimentPercentage || 50;
     const bearishPercentage = 100 - bullishPercentage;
     
     return {
@@ -36,7 +49,7 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
       bearishPercentage,
       sentiment: bullishPercentage > 50 ? "Bullish" : "Bearish",
     } as CTInfluencer;
-  }, [influencer]);
+  }, [influencer, stats]);
 
   if (isLoading || !influencer || !ctInfluencer) {
     return (
@@ -57,9 +70,58 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
     );
   }
 
-  const bullishVotes = Math.round((ctInfluencer.bullishPercentage / 100) * 1980);
-  const bearishVotes = Math.round((ctInfluencer.bearishPercentage / 100) * 1980);
-  const totalVotes = bullishVotes + bearishVotes;
+  const handleVote = async (sentiment: "Bullish" | "Bearish") => {
+    if (!address || !influencer) return;
+    
+    const success = await submitVoteOnly({
+      influencerId: influencer.id,
+      voterWalletAddress: address,
+      voteType: sentiment.toLowerCase() as 'bullish' | 'bearish',
+    });
+
+    if (success) {
+      refetchStats();
+      refetchReviews();
+    }
+  };
+
+  const handleAddReview = () => {
+    setShowVoteForm(true);
+  };
+
+  const handleSubmitReview = async () => {
+    if (!address || !influencer || !comment.trim()) return;
+
+    const success = await submitReview({
+      influencerId: influencer.id,
+      reviewerWalletAddress: address,
+      comment: comment.trim(),
+    });
+
+    if (success) {
+      setShowVoteForm(false);
+      setComment("");
+      refetchReviews();
+    }
+  };
+
+  const formatDate = (timestamp: number) => {
+    return new Date(timestamp).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const formatAddress = (address: string) => {
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
+
+  const bullishVotes = stats?.bullishVotes || 0;
+  const bearishVotes = stats?.bearishVotes || 0;
+  const totalVotes = stats?.totalVotes || 0;
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#151515" }}>
@@ -155,7 +217,7 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
               <div className="flex items-center space-x-2">
                 <FaChartBar className="text-gray-400 w-5 h-5" />
                 <span className="text-white font-medium">
-                  {totalVotes} Total Votes
+                  {statsLoading ? "..." : `${totalVotes} Total Votes`}
                 </span>
               </div>
             </div>
@@ -177,13 +239,16 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
 
                 <div className="text-right">
                   <button
-                    onClick={() => setUserVote("Bullish")}
-                    className="flex items-center space-x-2 px-4 py-2 bg-transparent border border-white rounded-lg text-white text-sm font-medium hover:bg-white hover:text-black transition-colors mb-2 cursor-pointer"
+                    onClick={() => handleVote("Bullish")}
+                    disabled={isVoting || !address}
+                    className="flex items-center space-x-2 px-4 py-2 bg-transparent border border-white rounded-lg text-white text-sm font-medium hover:bg-white hover:text-black transition-colors mb-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <FaArrowTrendUp className="w-4 h-4" />
                     <span>Vote Bullish</span>
                   </button>
-                  <p className="text-white text-sm">{bullishVotes} votes</p>
+                  <p className="text-white text-sm">
+                    {statsLoading ? "..." : `${bullishVotes} votes`}
+                  </p>
                 </div>
               </div>
 
@@ -208,12 +273,16 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
               <div className="flex items-start justify-between">
                 <div>
                   <button
-                    onClick={() => setUserVote("Bearish")}
-                    className="flex items-center space-x-2 px-4 py-2 bg-transparent border border-white rounded-lg text-white text-sm font-medium hover:bg-white hover:text-black transition-colors mb-2 cursor-pointer"
+                    onClick={() => handleVote("Bearish")}
+                    disabled={isVoting || !address}
+                    className="flex items-center space-x-2 px-4 py-2 bg-transparent border border-white rounded-lg text-white text-sm font-medium hover:bg-white hover:text-black transition-colors mb-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <FaArrowTrendDown className="w-4 h-4" />
                     <span>Vote Bearish</span>
                   </button>
+                  <p className="text-white text-sm">
+                    {statsLoading ? "..." : `${bearishVotes} votes`}
+                  </p>
                 </div>
 
                 <div className="text-right">
@@ -237,6 +306,57 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
           </div>
         </div>
 
+        {showVoteForm && (
+          <div
+            className="mt-8 border rounded-xl p-6"
+            style={{
+              backgroundColor: "#171717",
+              borderColor: "#323232",
+            }}
+          >
+            <h2 className="text-xl font-bold text-white mb-6">
+              Add Review for {influencer.name}
+            </h2>
+
+            {reviewError && (
+              <div className="mb-4 p-3 bg-red-900/20 border border-red-500/30 rounded-lg text-red-300">
+                {reviewError}
+              </div>
+            )}
+
+            <div className="mb-6">
+              <label className="block text-white font-medium mb-2">Your Review</label>
+              <textarea
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Share your thoughts about this influencer..."
+                className="w-full p-3 rounded-lg border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:border-gray-500 resize-none"
+                rows={3}
+                maxLength={200}
+              />
+              <div className="text-sm text-gray-400 mt-1">
+                {comment.length}/200
+              </div>
+            </div>
+
+            <div className="flex space-x-3">
+              <button
+                onClick={() => setShowVoteForm(false)}
+                className="cursor-pointer flex-1 bg-[#2a2a2a] border border-[#404040] text-white py-2 px-4 rounded-lg hover:bg-[#333333] transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmitReview}
+                disabled={isReviewing || !comment.trim()}
+                className="cursor-pointer flex-1 bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isReviewing ? "Submitting..." : "Submit Review"}
+              </button>
+            </div>
+          </div>
+        )}
+
         <div
           className="mt-8 border rounded-xl p-6"
           style={{
@@ -244,43 +364,77 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
             borderColor: "#323232",
           }}
         >
-          <h2 className="text-xl font-bold text-white mb-6">Review user</h2>
-
-          <div className="mb-6">
-            <input
-              type="text"
-              placeholder="Add a comment..."
-              className="w-full p-3 rounded-lg border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:border-gray-500"
-            />
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-white">Reviews</h2>
+            <div className="flex items-center space-x-3">
+              <span className="text-gray-400 text-sm">
+                {reviewsLoading ? "Loading..." : `${reviewCount} reviews`}
+              </span>
+              {address && !showVoteForm && (
+                <button
+                  onClick={handleAddReview}
+                  className="cursor-pointer bg-white text-black px-3 py-1 rounded-lg text-sm hover:bg-gray-200 transition-colors"
+                >
+                  Add Review
+                </button>
+              )}
+            </div>
           </div>
 
-          <div className="space-y-4">
-            {[1, 2].map((i) => (
-              <div
-                key={i}
-                className="flex items-start space-x-4 py-4 border-b border-gray-700 last:border-b-0"
-              >
-                <div className="w-10 h-10 bg-gray-600 rounded-full"></div>
-                <div className="flex-1">
-                  <span className="text-white font-medium">user {i}</span>
-                  <p className="text-gray-400 my-2">i like thiss</p>
-                  <div className="flex items-center space-x-4 text-sm">
-                    <button className="flex items-center space-x-1 text-gray-500 hover:text-white">
-                      <FaThumbsUp className="w-3 h-3" />
-                      <span>3</span>
-                    </button>
-                    <button className="flex items-center space-x-1 text-gray-500 hover:text-white">
-                      <FaThumbsDown className="w-3 h-3" />
-                      <span>0</span>
-                    </button>
-                    <button className="flex items-center space-x-1 text-gray-500 hover:text-white">
-                      <FaRegCommentDots className="w-3 h-3" />
-                    </button>
+          {reviewsLoading ? (
+            <div className="space-y-4">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="animate-pulse py-4">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-10 h-10 bg-gray-600 rounded-full"></div>
+                    <div className="flex-1">
+                      <div className="h-4 bg-gray-600 rounded mb-2 w-24"></div>
+                      <div className="h-3 bg-gray-600 rounded w-full"></div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : reviews.length > 0 ? (
+            <div className="space-y-4">
+              {reviews.map((review) => (
+                <div
+                  key={review.id}
+                  className="flex items-start space-x-4 py-4 border-b border-gray-700 last:border-b-0"
+                >
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-sm ${
+                    review.sentiment === 'bullish' 
+                      ? 'bg-gradient-to-br from-green-500 to-green-600' 
+                      : 'bg-gradient-to-br from-red-500 to-red-600'
+                  }`}>
+                    {review.sentiment === 'bullish' ? '📈' : '📉'}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className="text-white font-medium">
+                        {formatAddress(review.reviewerWalletAddress)}
+                      </span>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${
+                        review.sentiment === 'bullish'
+                          ? 'bg-green-500/20 text-green-400'
+                          : 'bg-red-500/20 text-red-400'
+                      }`}>
+                        {review.sentiment}
+                      </span>
+                      <span className="text-gray-500 text-xs">
+                        {formatDate(review.createdAt)}
+                      </span>
+                    </div>
+                    <p className="text-gray-300">{review.comment}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center text-gray-400 py-8">
+              No reviews yet. Be the first to vote!
+            </div>
+          )}
         </div>
       </main>
     </div>
