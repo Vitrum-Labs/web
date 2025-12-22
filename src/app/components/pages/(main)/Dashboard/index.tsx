@@ -12,9 +12,9 @@ const Dashboard: FC<DashboardProps> = ({
   userName = "User",
 }) => {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#151515' }}>
+    <div className="min-h-screen" style={{ backgroundColor: "#151515" }}>
       <Navbar walletAddress={walletAddress} />
-      
+
       <main className="max-w-7xl mx-auto px-6 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">
@@ -39,7 +39,7 @@ const Dashboard: FC<DashboardProps> = ({
               />
               <ReputationGatedActions />
             </div>
-            
+
             <div className="lg:col-span-2">
               <VitrumIdentity />
             </div>

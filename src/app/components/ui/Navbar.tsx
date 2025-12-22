@@ -3,14 +3,11 @@
 import { FC } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-interface NavbarProps {
-  walletAddress?: string;
-}
-
-const Navbar: FC<NavbarProps> = ({ walletAddress = "0X123....890" }) => {
+const Navbar: FC = () => {
   const pathname = usePathname();
-  
+
   const navItems = [
     { label: "Dashboard", href: "/app/dashboard" },
     { label: "Identity", href: "/app/identity" },
@@ -18,7 +15,10 @@ const Navbar: FC<NavbarProps> = ({ walletAddress = "0X123....890" }) => {
   ];
 
   return (
-    <nav className="w-full border-b px-6 py-4" style={{ backgroundColor: '#171717', borderColor: '#323232' }}>
+    <nav
+      className="w-full border-b px-6 py-4"
+      style={{ backgroundColor: "#171717", borderColor: "#323232" }}
+    >
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         <div className="flex items-center">
           <Image
@@ -47,9 +47,7 @@ const Navbar: FC<NavbarProps> = ({ walletAddress = "0X123....890" }) => {
         </div>
 
         <div className="flex items-center">
-          <div className="px-4 py-2 rounded-lg text-sm text-gray-300 font-mono border" style={{ backgroundColor: '#171717', borderColor: '#323232' }}>
-            {walletAddress}
-          </div>
+          <ConnectButton />
         </div>
       </div>
     </nav>

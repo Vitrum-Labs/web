@@ -10,7 +10,10 @@ const StatsCard: FC<StatsCardProps> = ({
   nextTierProgress = 82,
 }) => {
   return (
-    <div className="border border-gray-700 rounded-xl p-6" style={{ backgroundColor: '#1F1F1F' }}>
+    <div
+      className="border border-gray-700 rounded-xl p-6"
+      style={{ backgroundColor: "#1F1F1F" }}
+    >
       <div className="grid grid-cols-2 gap-6">
         <div>
           <div className="flex items-center space-x-2 mb-2">
@@ -25,7 +28,9 @@ const StatsCard: FC<StatsCardProps> = ({
             <FaHashtag className="text-purple-400 w-4 h-4" />
             <span className="text-gray-400 text-sm">Tx Count</span>
           </div>
-          <div className="text-2xl font-bold text-white">{txCount.toLocaleString()}</div>
+          <div className="text-2xl font-bold text-white">
+            {txCount.toLocaleString()}
+          </div>
         </div>
       </div>
 

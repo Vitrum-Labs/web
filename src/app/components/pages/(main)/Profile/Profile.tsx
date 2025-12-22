@@ -2,20 +2,20 @@
 
 import { FC } from "react";
 import Navbar from "../../../ui/Navbar";
-import IdentityHero from "./IdentityHero";
-import CTGrid from "./CTGrid";
+import UserProfileCard from "./UserProfileCard";
+import NFTGrid from "./NFTGrid";
 
-const Identity: FC = () => {
+const Profile: FC = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#151515" }}>
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        <IdentityHero />
-        <CTGrid />
+        <UserProfileCard />
+        <NFTGrid />
       </main>
     </div>
   );
 };
 
-export default Identity;
+export default Profile;

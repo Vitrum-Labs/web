@@ -6,16 +6,17 @@ import { IdentityHeroProps } from "./types";
 
 const IdentityHero: FC<IdentityHeroProps> = ({
   percentage = 74,
-  sentiment = "Bullish"
+  sentiment = "Bullish",
 }) => {
   const isPositive = sentiment === "Bullish";
-  
+
   return (
     <div className="mb-8">
-      <div 
+      <div
         className="border rounded-xl p-8 relative overflow-hidden"
         style={{
-          background: "linear-gradient(135deg, #1F1F1F 0%, #171717 50%, #0F0F0F 100%)",
+          background:
+            "linear-gradient(135deg, #1F1F1F 0%, #171717 50%, #0F0F0F 100%)",
           borderColor: "#323232",
         }}
       >
@@ -29,7 +30,7 @@ const IdentityHero: FC<IdentityHeroProps> = ({
               height={350}
               className="object-contain relative z-10 filter drop-shadow-lg"
               style={{
-                filter: 'drop-shadow(0 0 20px rgba(34, 197, 94, 0.4))'
+                filter: "drop-shadow(0 0 20px rgba(34, 197, 94, 0.4))",
               }}
             />
           </div>
@@ -50,27 +51,34 @@ const IdentityHero: FC<IdentityHeroProps> = ({
           </div>
 
           <div className="mb-6">
-            <div className={`text-6xl font-bold mb-4 ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
+            <div
+              className={`text-6xl font-bold mb-4 ${isPositive ? "text-green-400" : "text-red-400"}`}
+            >
               {percentage}%
-              <span className={`text-2xl font-medium ml-4 ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
+              <span
+                className={`text-2xl font-medium ml-4 ${isPositive ? "text-green-400" : "text-red-400"}`}
+              >
                 {sentiment}
               </span>
             </div>
 
             <div className="w-full bg-gray-800 rounded-full h-3 mb-4">
               <div className="flex h-3 rounded-full overflow-hidden">
-                <div 
+                <div
                   className="bg-green-500 transition-all duration-300"
-                  style={{ width: `${isPositive ? percentage : 100 - percentage}%` }}
+                  style={{
+                    width: `${isPositive ? percentage : 100 - percentage}%`,
+                  }}
                 ></div>
-                <div 
+                <div
                   className="bg-red-500 transition-all duration-300"
-                  style={{ width: `${isPositive ? 100 - percentage : percentage}%` }}
+                  style={{
+                    width: `${isPositive ? 100 - percentage : percentage}%`,
+                  }}
                 ></div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

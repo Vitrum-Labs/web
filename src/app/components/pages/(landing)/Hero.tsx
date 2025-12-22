@@ -64,7 +64,7 @@ const Hero: React.FC<HeroProps> = ({
                 >
                   {word}{" "}
                 </motion.span>
-              )
+              ),
             )}
           </motion.h1>
           <motion.p

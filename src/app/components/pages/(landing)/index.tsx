@@ -1,8 +1,8 @@
-'use client'
-import Hero from './Hero'
-import CT from './CT'
-import HowItWorks from './HowItWorks'
-import Footer from './Footer'
+"use client";
+import Hero from "./Hero";
+import CT from "./CT";
+import HowItWorks from "./HowItWorks";
+import Footer from "./Footer";
 
 const LandingPage: React.FC = () => {
   return (
@@ -12,7 +12,7 @@ const LandingPage: React.FC = () => {
       <HowItWorks />
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default LandingPage
+export default LandingPage;

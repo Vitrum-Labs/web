@@ -1,4 +1,8 @@
-import { ActionCard, ReputationData, UserWallet } from '../../../../types/domain';
+import {
+  ActionCard,
+  ReputationData,
+  UserWallet,
+} from "../../../../types/domain";
 
 export interface ReputationCardProps {
   score: number;
