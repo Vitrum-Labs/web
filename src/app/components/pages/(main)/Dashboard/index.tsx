@@ -45,10 +45,10 @@ const Dashboard: FC = () => {
           <button
             onClick={refetch}
             disabled={isLoading}
-            className="flex items-center space-x-2 px-4 py-2 bg-[#171717] border border-[#323232] rounded-lg text-white hover:bg-[#1a1a1a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="cursor-pointer flex items-center space-x-2 px-4 py-2 bg-[#171717] border border-[#323232] rounded-lg text-white hover:bg-[#1a1a1a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <FaSync className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
-            <span>Get Reputation</span>
+            <span>Refresh Reputation</span>
           </button>
         </div>
 
