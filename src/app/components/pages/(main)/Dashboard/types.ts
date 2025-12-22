@@ -12,6 +12,7 @@ export interface ReputationCardProps {
   walletAge?: string;
   txCount?: number;
   nextTierProgress?: number;
+  isLoading?: boolean;
 }
 
 export interface ReputationGatedActionsProps {

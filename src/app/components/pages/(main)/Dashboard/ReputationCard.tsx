@@ -1,17 +1,18 @@
 "use client";
 
 import { FC } from "react";
-import { FaChartLine, FaClock, FaArrowTrendUp } from "react-icons/fa6";
+import { FaChartLine, FaClock, FaArrowUp, FaCheck, FaTimes } from "react-icons/fa";
 import { ReputationCardProps } from "./types";
 
 const ReputationCard: FC<ReputationCardProps> = ({
-  score = 1000,
+  score = 0,
   maxScore = 1000,
-  rank = "EXCELLENT",
-  userPercentile = 12,
-  walletAge = "2.4 Years",
-  txCount = 1248,
-  nextTierProgress = 82,
+  rank = "NO DATA",
+  userPercentile = 0,
+  walletAge = "No data",
+  txCount = 0,
+  nextTierProgress = 0,
+  isLoading = false,
 }) => {
   return (
     <div
@@ -33,23 +34,37 @@ const ReputationCard: FC<ReputationCardProps> = ({
 
           <div className="mb-6">
             <div className="text-5xl font-bold mb-4 text-white">
-              {score}
-              <span className="text-[#898989] text-xl font-normal">
-                /{maxScore}
-              </span>
+              {isLoading ? (
+                <div className="animate-pulse">
+                  <div className="h-12 bg-gray-600 rounded w-32"></div>
+                </div>
+              ) : (
+                <>
+                  {score}
+                  <span className="text-[#898989] text-xl font-normal">
+                    /{maxScore}
+                  </span>
+                </>
+              )}
             </div>
 
             <div className="flex items-center space-x-3">
               <div
-                className="flex items-center space-x-2 px-3 py-1 rounded-full text-sm font-medium"
+                className={`flex items-center space-x-2 px-3 py-1 rounded-full text-sm font-medium ${
+                  rank === "Eligible to Vote" 
+                    ? "bg-blue-900/30 border-blue-500/50 text-blue-300" 
+                    : "bg-red-900/30 border-red-500/50 text-red-300"
+                }`}
                 style={{
-                  backgroundColor: "#434343",
-                  borderColor: "#757575",
-                  border: "0.5px solid #757575",
+                  border: "0.5px solid",
                 }}
               >
-                <div className="w-2 h-2 bg-[#FFFFFF] rounded-full"></div>
-                <span className="text-[#FFFFFF]">{rank}</span>
+                {rank === "Eligible to Vote" ? (
+                  <FaCheck className="w-3 h-3 text-blue-400" />
+                ) : (
+                  <FaTimes className="w-3 h-3 text-red-400" />
+                )}
+                <span>{rank}</span>
               </div>
               <span className="text-[#898989] text-sm">
                 Top {userPercentile}% of users
@@ -71,7 +86,15 @@ const ReputationCard: FC<ReputationCardProps> = ({
               <FaClock className="w-3 h-3" style={{ color: "#898989" }} />
               <span className="text-gray-400 text-xs">Wallet Age</span>
             </div>
-            <div className="text-md font-bold text-white">{walletAge}</div>
+            <div className="text-md font-bold text-white">
+              {isLoading ? (
+                <div className="animate-pulse">
+                  <div className="h-4 bg-gray-600 rounded w-16"></div>
+                </div>
+              ) : (
+                walletAge
+              )}
+            </div>
           </div>
 
           <div
@@ -83,14 +106,20 @@ const ReputationCard: FC<ReputationCardProps> = ({
             }}
           >
             <div className="flex items-center space-x-2 mb-2">
-              <FaArrowTrendUp
+              <FaArrowUp
                 className="w-3 h-3"
                 style={{ color: "#898989" }}
               />
               <span className="text-gray-400 text-xs">Tx Count</span>
             </div>
             <div className="text-md font-bold text-white">
-              {txCount.toLocaleString()}
+              {isLoading ? (
+                <div className="animate-pulse">
+                  <div className="h-4 bg-gray-600 rounded w-12"></div>
+                </div>
+              ) : (
+                txCount.toLocaleString()
+              )}
             </div>
           </div>
 
