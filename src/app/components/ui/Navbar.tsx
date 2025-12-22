@@ -52,6 +52,7 @@ const Navbar: FC = () => {
               account,
               openAccountModal,
               openConnectModal,
+              disconnect,
               authenticationStatus,
               mounted,
             }) => {
@@ -63,17 +64,25 @@ const Navbar: FC = () => {
                   {!connected ? (
                     <button
                       onClick={openConnectModal}
-                      className="bg-black text-white px-4 py-2 rounded-full text-sm"
+                      className="bg-black text-white px-4 py-2 rounded-full text-sm cursor-pointer hover:bg-gray-800 transition-colors"
                     >
                       Connect Wallet
                     </button>
                   ) : (
-                    <button
-                      onClick={openAccountModal}
-                      className="bg-black text-white px-4 py-2 rounded-full text-sm font-mono"
-                    >
-                      {account.displayName}
-                    </button>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={openAccountModal}
+                        className="bg-black text-white px-4 py-2 rounded-full text-sm font-mono cursor-pointer hover:bg-gray-800 transition-colors"
+                      >
+                        {account.displayName}
+                      </button>
+                      <button
+                        onClick={disconnect}
+                        className="bg-red-600 text-white px-3 py-2 rounded-full text-sm cursor-pointer hover:bg-red-700 transition-colors"
+                      >
+                        Disconnect
+                      </button>
+                    </div>
                   )}
                 </div>
               );

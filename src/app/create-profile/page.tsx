@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAccount } from "wagmi";
-import { FaUpload, FaTwitter, FaGlobe, FaDiscord } from "react-icons/fa";
+import { toast } from "sonner";
+import { FaUpload, FaTwitter, FaGlobe, FaDiscord, FaWallet } from "react-icons/fa";
 import { SiTelegram } from "react-icons/si";
 import { useCreateProfile } from "@/lib/hooks/useCreateProfile";
 import { useUploadProfileImage } from "@/lib/hooks/useUploadProfileImage";
 
 interface ProfileData {
+  walletAddress: string;
   name: string;
   bio: string;
   socialLinks: {
@@ -21,18 +22,18 @@ interface ProfileData {
 
 export default function CreateProfile() {
   const router = useRouter();
-  const { address } = useAccount();
   const { createProfile, isLoading: isCreating } = useCreateProfile();
   const { uploadImage, isUploading, imageUrl } = useUploadProfileImage();
 
   const [profileData, setProfileData] = useState<ProfileData>({
+    walletAddress: "",
     name: "",
     bio: "",
     socialLinks: {
-      twitter: "",
-      telegram: "",
-      discord: "",
-      website: "",
+      twitter: "https://twitter.com/username",
+      telegram: "https://t.me/username",
+      discord: "username#1234",
+      website: "https://yourwebsite.com",
     },
   });
 
@@ -63,10 +64,10 @@ export default function CreateProfile() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!address || !imageUrl) return;
+    if (!profileData.walletAddress || !imageUrl) return;
 
     const payload = {
-      walletAddress: address,
+      walletAddress: profileData.walletAddress,
       name: profileData.name,
       bio: profileData.bio,
       socialLinks: profileData.socialLinks,
@@ -75,11 +76,18 @@ export default function CreateProfile() {
 
     const success = await createProfile(payload);
     if (success) {
-      router.push("/dashboard");
+      toast.success("Profile created successfully!", {
+        duration: 3000,
+        style: {
+          background: '#1f1f1f',
+          border: '1px solid #22c55e',
+          color: '#ffffff',
+        },
+      });
     }
   };
 
-  const isFormValid = profileData.name && profileData.bio && imageUrl;
+  const isFormValid = profileData.walletAddress && profileData.name && profileData.bio && imageUrl;
   const isLoading = isCreating || isUploading;
 
   return (
@@ -122,6 +130,20 @@ export default function CreateProfile() {
                   disabled={isUploading}
                 />
               </label>
+            </div>
+          </div>
+
+          <div className="bg-[#1a1a1a] border border-[#323232] rounded-xl p-6">
+            <label className="block text-white font-medium mb-2">Wallet Address</label>
+            <div className="flex items-center space-x-3">
+              <FaWallet className="text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                value={profileData.walletAddress}
+                onChange={(e) => handleInputChange("walletAddress", e.target.value)}
+                className="flex-1 bg-[#2a2a2a] border border-[#404040] rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-white focus:outline-none transition-colors font-mono"
+                placeholder="0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb7"
+              />
             </div>
           </div>
 

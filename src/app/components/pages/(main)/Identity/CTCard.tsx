@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { type FC, useState } from "react";
+import { type FC, useState, useMemo } from "react";
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
 import type { CTCardProps } from "./types";
+import { useInfluencerStats } from "../../../../../lib/hooks/useInfluencerStats";
 
 const CTCard: FC<CTCardProps> = ({
   id,
@@ -14,6 +15,26 @@ const CTCard: FC<CTCardProps> = ({
   sentiment,
 }) => {
   const [userVote, setUserVote] = useState<"Bullish" | "Bearish" | null>(null);
+  const { stats, isLoading: statsLoading } = useInfluencerStats(id);
+
+  const dynamicData = useMemo(() => {
+    if (!stats) {
+      return {
+        bullishPercentage,
+        bearishPercentage,
+        sentiment
+      };
+    }
+    
+    const dynamicBullishPercentage = stats.sentimentPercentage || 50;
+    const dynamicBearishPercentage = 100 - dynamicBullishPercentage;
+    
+    return {
+      bullishPercentage: dynamicBullishPercentage,
+      bearishPercentage: dynamicBearishPercentage,
+      sentiment: dynamicBullishPercentage > 50 ? "Bullish" as const : "Bearish" as const
+    };
+  }, [stats, bullishPercentage, bearishPercentage, sentiment]);
 
   const handleVote = (vote: "Bullish" | "Bearish") => {
     setUserVote(vote);
@@ -48,18 +69,18 @@ const CTCard: FC<CTCardProps> = ({
             <div className="flex h-2 rounded-full overflow-hidden">
               <div
                 className="bg-green-500 transition-all duration-300"
-                style={{ width: `${bullishPercentage}%` }}
+                style={{ width: `${dynamicData.bullishPercentage}%` }}
               ></div>
               <div
                 className="bg-red-500 transition-all duration-300"
-                style={{ width: `${bearishPercentage}%` }}
+                style={{ width: `${dynamicData.bearishPercentage}%` }}
               ></div>
             </div>
           </div>
 
           <div className="flex justify-between text-xs text-gray-400">
-            <span>{bullishPercentage}% Bullish</span>
-            <span>{bearishPercentage}% Bearish</span>
+            <span>{statsLoading ? "..." : `${dynamicData.bullishPercentage}% Bullish`}</span>
+            <span>{statsLoading ? "..." : `${dynamicData.bearishPercentage}% Bearish`}</span>
           </div>
         </div>
 
@@ -74,12 +95,12 @@ const CTCard: FC<CTCardProps> = ({
       <div className="absolute top-4 right-4">
         <div
           className={`px-2 py-1 rounded-full text-xs font-medium ${
-            sentiment === "Bullish"
+            dynamicData.sentiment === "Bullish"
               ? "bg-green-900/50 text-green-400 border border-green-700"
               : "bg-red-900/50 text-red-400 border border-red-700"
           }`}
         >
-          {sentiment}
+          {statsLoading ? "..." : dynamicData.sentiment}
         </div>
       </div>
     </div>

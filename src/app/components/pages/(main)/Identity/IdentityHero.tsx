@@ -4,11 +4,7 @@ import Image from "next/image";
 import type { FC } from "react";
 import type { IdentityHeroProps } from "./types";
 
-const IdentityHero: FC<IdentityHeroProps> = ({
-  percentage = 74,
-  sentiment = "Bullish",
-}) => {
-  const isPositive = sentiment === "Bullish";
+const IdentityHero: FC<IdentityHeroProps> = () => {
 
   return (
     <div className="mb-8">
@@ -67,31 +63,39 @@ const IdentityHero: FC<IdentityHeroProps> = ({
           </div>
 
           <div className="mb-6">
-            <div
-              className={`text-6xl font-bold mb-4 ${isPositive ? "text-green-400" : "text-red-400"}`}
-            >
-              {percentage}%
-              <span
-                className={`text-2xl font-medium ml-4 ${isPositive ? "text-green-400" : "text-red-400"}`}
-              >
-                {sentiment}
-              </span>
+            <div className="text-4xl font-bold mb-4">
+              <span className="text-green-400">Bullish</span>
+              <span className="text-white"> or </span>
+              <span className="text-red-400">Bearish?</span>
             </div>
-
-            <div className="w-full bg-gray-800 rounded-full h-3 mb-4">
-              <div className="flex h-3 rounded-full overflow-hidden">
-                <div
-                  className="bg-green-500 transition-all duration-300"
-                  style={{
-                    width: `${isPositive ? percentage : 100 - percentage}%`,
-                  }}
-                ></div>
-                <div
-                  className="bg-red-500 transition-all duration-300"
-                  style={{
-                    width: `${isPositive ? 100 - percentage : percentage}%`,
-                  }}
-                ></div>
+            <p className="text-gray-300 text-lg leading-relaxed mb-6 max-w-3xl">
+              Track and analyze the reputation of crypto influencers through community voting and reviews. 
+              Make informed decisions by understanding market sentiment from verified community feedback.
+            </p>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3 bg-green-600/20 border border-green-600/30 px-4 py-2 rounded-full">
+                <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center">
+                  <Image
+                    src="/assets/logo/bull-logo.png"
+                    alt="Bull"
+                    width={16}
+                    height={16}
+                    className="object-contain"
+                  />
+                </div>
+                <span className="text-sm text-green-400 font-medium">Bullish</span>
+              </div>
+              <div className="flex items-center space-x-3 bg-red-600/20 border border-red-600/30 px-4 py-2 rounded-full">
+                <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center">
+                  <Image
+                    src="/assets/logo/bear-logo.png"
+                    alt="Bear"
+                    width={16}
+                    height={16}
+                    className="object-contain"
+                  />
+                </div>
+                <span className="text-sm text-red-400 font-medium">Bearish</span>
               </div>
             </div>
           </div>
