@@ -28,7 +28,7 @@ const ReputationGatedActions: FC<ReputationGatedActionsProps> = ({
   const actionCards = actions || defaultActions;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mt-10">
       <h2 className="text-2xl font-bold text-white mb-3">
         Reputation-Gated Actions
       </h2>
