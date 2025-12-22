@@ -1,9 +1,9 @@
 "use client";
 
-import { FC } from "react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import type { FC } from "react";
 
 const Navbar: FC = () => {
   const pathname = usePathname();
@@ -47,7 +47,38 @@ const Navbar: FC = () => {
         </div>
 
         <div className="flex items-center">
-          <ConnectButton />
+          <ConnectButton.Custom>
+            {({
+              account,
+              openAccountModal,
+              openConnectModal,
+              authenticationStatus,
+              mounted,
+            }) => {
+              const ready = mounted && authenticationStatus !== 'loading';
+              const connected = ready && account;
+
+              return (
+                <div {...(!ready && { 'aria-hidden': true, style: { opacity: 0 } })}>
+                  {!connected ? (
+                    <button
+                      onClick={openConnectModal}
+                      className="bg-black text-white px-4 py-2 rounded-full text-sm"
+                    >
+                      Connect Wallet
+                    </button>
+                  ) : (
+                    <button
+                      onClick={openAccountModal}
+                      className="bg-black text-white px-4 py-2 rounded-full text-sm font-mono"
+                    >
+                      {account.displayName}
+                    </button>
+                  )}
+                </div>
+              );
+            }}
+          </ConnectButton.Custom>
         </div>
       </div>
     </nav>

@@ -1,4 +1,4 @@
-import { CTInfluencer, Sentiment } from "../../../../types/domain";
+import { CTInfluencer, type Sentiment } from "../../../../types/domain";
 
 export interface CTCardProps {
   id: string;

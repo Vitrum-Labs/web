@@ -1,8 +1,14 @@
 "use client";
 
-import { FC } from "react";
-import { FaChartLine, FaClock, FaArrowUp, FaCheck, FaTimes } from "react-icons/fa";
-import { ReputationCardProps } from "./types";
+import type { FC } from "react";
+import {
+  FaArrowUp,
+  FaCheck,
+  FaClock,
+  FaTimes,
+} from "react-icons/fa";
+import { FaHeartPulse } from "react-icons/fa6";
+import type { ReputationCardProps } from "./types";
 
 const ReputationCard: FC<ReputationCardProps> = ({
   score = 0,
@@ -26,7 +32,7 @@ const ReputationCard: FC<ReputationCardProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-5">
         <div className="lg:col-span-3">
           <div className="flex items-center space-x-2 mb-6">
-            <FaChartLine className="text-[#898989] w-4 h-4" />
+            <FaHeartPulse className="text-[#898989] w-4 h-4" />
             <span className="text-[#898989] text-md font-medium">
               Onchain Reputation Score
             </span>
@@ -51,8 +57,8 @@ const ReputationCard: FC<ReputationCardProps> = ({
             <div className="flex items-center space-x-3">
               <div
                 className={`flex items-center space-x-2 px-3 py-1 rounded-full text-sm font-medium ${
-                  rank === "Eligible to Vote" 
-                    ? "bg-blue-900/30 border-blue-500/50 text-blue-300" 
+                  rank === "Eligible to Vote"
+                    ? "bg-blue-900/30 border-blue-500/50 text-blue-300"
                     : "bg-red-900/30 border-red-500/50 text-red-300"
                 }`}
                 style={{
@@ -106,10 +112,7 @@ const ReputationCard: FC<ReputationCardProps> = ({
             }}
           >
             <div className="flex items-center space-x-2 mb-2">
-              <FaArrowUp
-                className="w-3 h-3"
-                style={{ color: "#898989" }}
-              />
+              <FaArrowUp className="w-3 h-3" style={{ color: "#898989" }} />
               <span className="text-gray-400 text-xs">Tx Count</span>
             </div>
             <div className="text-md font-bold text-white">

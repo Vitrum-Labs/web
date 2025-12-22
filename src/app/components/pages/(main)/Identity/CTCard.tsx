@@ -1,9 +1,9 @@
 "use client";
 
-import { FC, useState } from "react";
 import Image from "next/image";
-import { CTCardProps } from "./types";
-import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
+import { type FC, useState } from "react";
+import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
+import type { CTCardProps } from "./types";
 
 const CTCard: FC<CTCardProps> = ({
   id,

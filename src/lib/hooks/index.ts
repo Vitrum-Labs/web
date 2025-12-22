@@ -1,2 +1,2 @@
-export { useReputationQuick } from "./useReputationQuick";
 export type { ReputationQuickData, UseReputationQuickReturn } from "./types";
+export { useReputationQuick } from "./useReputationQuick";

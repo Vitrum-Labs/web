@@ -1,9 +1,9 @@
 "use client";
 
-import { FC } from "react";
-import { FaGift, FaUsers, FaLock } from "react-icons/fa";
-import { ReputationGatedActionsProps } from "./types";
-import { ActionCard } from "../../../../types/domain";
+import type { FC } from "react";
+import { FaGift, FaLock, FaUsers } from "react-icons/fa";
+import type { ActionCard } from "../../../../types/domain";
+import type { ReputationGatedActionsProps } from "./types";
 
 const ReputationGatedActions: FC<ReputationGatedActionsProps> = ({
   actions,

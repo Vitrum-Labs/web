@@ -1,15 +1,15 @@
 "use client";
-import { JetBrains_Mono, Inter } from "next/font/google";
-import {
-  FaShieldAlt,
-  FaVoteYea,
-  FaThumbsUp,
-  FaRobot,
-  FaUsers,
-  FaFilter,
-} from "react-icons/fa";
-import { IconType } from "react-icons";
 import { motion } from "framer-motion";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import type { IconType } from "react-icons";
+import {
+  FaFilter,
+  FaRobot,
+  FaShieldAlt,
+  FaThumbsUp,
+  FaUsers,
+  FaVoteYea,
+} from "react-icons/fa";
 
 const mono = JetBrains_Mono({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });

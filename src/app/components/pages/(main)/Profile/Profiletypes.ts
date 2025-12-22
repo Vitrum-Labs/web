@@ -8,6 +8,8 @@ export interface UserProfileCardProps {
   maxScore?: number;
   reputationLevel?: string;
   walletAge?: string;
+  transactionCount?: number;
+  isLoading?: boolean;
 }
 
 export interface NFTGridProps {

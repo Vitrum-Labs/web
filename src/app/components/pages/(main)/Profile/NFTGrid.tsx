@@ -1,9 +1,14 @@
 "use client";
 
-import { FC } from "react";
-import { NFTGridProps } from "./types";
+import type { FC } from "react";
+import type { NFTGridProps } from "./Profiletypes";
 
 const NFTGrid: FC<NFTGridProps> = ({ nftCount = 6 }) => {
+  const nftItems = Array.from({ length: nftCount }, (_, i) => ({
+    id: `nft-${Math.random().toString(36).slice(2, 9)}-${i}`,
+    index: i,
+  }));
+
   return (
     <div
       className="border rounded-xl p-6"
@@ -12,12 +17,14 @@ const NFTGrid: FC<NFTGridProps> = ({ nftCount = 6 }) => {
         borderColor: "#323232",
       }}
     >
-      <h2 className="text-xl font-bold text-white mb-6">Review user</h2>
+      <h2 className="text-xl font-bold text-white mb-6">
+        Onchain Reputation Score NFT
+      </h2>
 
       <div className="grid grid-cols-3 gap-4">
-        {Array.from({ length: nftCount }, (_, i) => (
+        {nftItems.map((nft) => (
           <div
-            key={i}
+            key={nft.id}
             className="aspect-square rounded-lg border border-gray-600 flex items-center justify-center"
             style={{ backgroundColor: "#2A2A2A" }}
           >

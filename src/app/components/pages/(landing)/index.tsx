@@ -1,8 +1,8 @@
 "use client";
-import Hero from "./Hero";
 import CT from "./CT";
-import HowItWorks from "./HowItWorks";
 import Footer from "./Footer";
+import Hero from "./Hero";
+import HowItWorks from "./HowItWorks";
 
 const LandingPage: React.FC = () => {
   return (

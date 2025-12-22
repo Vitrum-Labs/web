@@ -1,7 +1,7 @@
 "use client";
-import { JetBrains_Mono } from "next/font/google";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
+import { JetBrains_Mono } from "next/font/google";
 import animationData from "../../../../../public/assets/landing/animation/MCpepe.json";
 
 const mono = JetBrains_Mono({ subsets: ["latin"] });

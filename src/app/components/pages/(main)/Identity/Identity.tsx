@@ -1,9 +1,9 @@
 "use client";
 
-import { FC } from "react";
+import type { FC } from "react";
 import Navbar from "../../../ui/Navbar";
-import IdentityHero from "./IdentityHero";
 import CTGrid from "./CTGrid";
+import IdentityHero from "./IdentityHero";
 
 const Identity: FC = () => {
   return (

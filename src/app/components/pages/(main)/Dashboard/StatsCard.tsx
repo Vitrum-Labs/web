@@ -1,8 +1,8 @@
 "use client";
 
-import { FC } from "react";
+import type { FC } from "react";
 import { FaClock, FaHashtag } from "react-icons/fa";
-import { StatsCardProps } from "./types";
+import type { StatsCardProps } from "./types";
 
 const StatsCard: FC<StatsCardProps> = ({
   walletAge = "2.4 Years",

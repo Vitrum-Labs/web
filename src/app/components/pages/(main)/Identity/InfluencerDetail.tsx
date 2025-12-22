@@ -1,18 +1,18 @@
 "use client";
 
-import { FC, useState, useMemo } from "react";
 import Image from "next/image";
-import Navbar from "../../../ui/Navbar";
-import { CTInfluencer } from "../../../../types/domain";
+import { type FC, useMemo, useState } from "react";
 import {
-  FaChartBar,
-  FaArrowTrendUp,
-  FaArrowTrendDown,
-  FaThumbsUp,
-  FaThumbsDown,
-  FaRegCommentDots,
   FaArrowLeft,
+  FaArrowTrendDown,
+  FaArrowTrendUp,
+  FaChartBar,
+  FaRegCommentDots,
+  FaThumbsDown,
+  FaThumbsUp,
 } from "react-icons/fa6";
+import type { CTInfluencer } from "../../../../types/domain";
+import Navbar from "../../../ui/Navbar";
 
 interface InfluencerDetailProps {
   id: string;

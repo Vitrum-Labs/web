@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { apiClient } from "./api";
-import type { UseReputationQuickReturn, ReputationQuickData } from "./types";
+import type { ReputationQuickData, UseReputationQuickReturn } from "./types";
 
 export const useReputationQuick = (): UseReputationQuickReturn => {
   const { address } = useAccount();
@@ -12,7 +12,7 @@ export const useReputationQuick = (): UseReputationQuickReturn => {
   const fetchReputation = useCallback(async () => {
     if (!address) {
       setData(null);
-      setError("Wallet not connected");
+      setError("Please Connect Your Wallet");
       return;
     }
 
@@ -23,7 +23,8 @@ export const useReputationQuick = (): UseReputationQuickReturn => {
       const result = await apiClient.getReputationQuick(address);
       setData(result);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Unknown error occurred";
+      const errorMessage =
+        err instanceof Error ? err.message : "Unknown error occurred";
       setError(errorMessage);
       setData(null);
     } finally {

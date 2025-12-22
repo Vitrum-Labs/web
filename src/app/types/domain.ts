@@ -1,3 +1,5 @@
+import type { ReactElement } from "react";
+
 export type Sentiment = "Bullish" | "Bearish";
 
 export interface UserWallet {
@@ -24,7 +26,7 @@ export interface CTInfluencer {
 }
 
 export interface ActionCard {
-  icon: JSX.Element;
+  icon: ReactElement;
   title: string;
   description: string;
   buttonText: string;

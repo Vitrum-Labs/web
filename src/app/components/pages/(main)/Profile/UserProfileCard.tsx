@@ -1,17 +1,31 @@
 "use client";
 
-import { FC } from "react";
 import Image from "next/image";
-import { FaChartLine, FaClock } from "react-icons/fa6";
-import { UserProfileCardProps } from "./types";
+import type { FC } from "react";
+import {
+  FaArrowUp,
+  FaCheck,
+  FaClock,
+  FaTimes,
+} from "react-icons/fa";
+import { FaHeartPulse } from "react-icons/fa6";
+
+import type { UserProfileCardProps } from "./Profiletypes";
 
 const UserProfileCard: FC<UserProfileCardProps> = ({
-  name = "Vitrum",
-  reputationScore = 1000,
+  name = "No wallet connected",
+  reputationScore = 0,
   maxScore = 1000,
-  reputationLevel = "EXCELLENT REPUTATION",
-  walletAge = "2.4 Years",
+  reputationLevel = "NO DATA",
+  walletAge = "No data",
+  transactionCount = 0,
+  isLoading = false,
 }) => {
+  const formatAddress = (address: string): string => {
+    if (address === "No wallet connected") return address;
+    if (address.length <= 20) return address;
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
   return (
     <div
       className="border rounded-xl p-8 mb-8"
@@ -22,7 +36,7 @@ const UserProfileCard: FC<UserProfileCardProps> = ({
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-6">
-          <div className="w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center border-2 border-gray-600">
+          <div className="w-20 h-20 rounded-full flex items-center justify-center border-2 border-[#323232]">
             <Image
               src="/assets/logo/vitrum-logo-transparant.png"
               alt="Vitrum Logo"
@@ -33,29 +47,47 @@ const UserProfileCard: FC<UserProfileCardProps> = ({
           </div>
 
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">{name}</h1>
+            <h1 className="text-3xl font-bold text-white mb-2 font-mono">
+              {formatAddress(name)}
+            </h1>
             <div
-              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium"
+              className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
+                reputationLevel === "ELIGIBLE TO VOTE"
+                  ? "bg-blue-900/30 border-blue-500/50 text-blue-300"
+                  : "bg-red-900/30 border-red-500/50 text-red-300"
+              }`}
               style={{
-                backgroundColor: "#434343",
-                borderColor: "#757575",
-                border: "0.5px solid #757575",
+                border: "0.5px solid",
               }}
             >
-              <div className="w-2 h-2 bg-white rounded-full mr-2"></div>
-              <span className="text-white">{reputationLevel}</span>
+              {reputationLevel === "ELIGIBLE TO VOTE" ? (
+                <FaCheck className="w-2 h-2 text-blue-400 mr-2" />
+              ) : (
+                <FaTimes className="w-2 h-2 text-red-400 mr-2" />
+              )}
+              <span>{reputationLevel}</span>
             </div>
           </div>
         </div>
 
         <div className="text-right">
           <div className="flex items-center space-x-2 mb-2">
-            <FaChartLine className="text-gray-400 w-4 h-4" />
-            <span className="text-gray-400 text-sm">REPUTATION SCORE</span>
+            <FaHeartPulse className="text-gray-400 w-4 h-4" />
+            <span className="text-gray-400 text-sm">
+              Onchain Reputation Score
+            </span>
           </div>
           <div className="text-5xl font-bold text-white">
-            {reputationScore}
-            <span className="text-gray-400 text-2xl">/{maxScore}</span>
+            {isLoading ? (
+              <div className="animate-pulse">
+                <div className="h-12 bg-gray-600 rounded w-32"></div>
+              </div>
+            ) : (
+              <>
+                {reputationScore}
+                <span className="text-gray-400 text-2xl">/{maxScore}</span>
+              </>
+            )}
           </div>
         </div>
 
@@ -64,7 +96,31 @@ const UserProfileCard: FC<UserProfileCardProps> = ({
             <FaClock className="text-gray-400 w-4 h-4" />
             <span className="text-gray-400 text-sm">Wallet Age</span>
           </div>
-          <div className="text-2xl font-bold text-white">{walletAge}</div>
+          <div className="text-2xl font-bold text-white">
+            {isLoading ? (
+              <div className="animate-pulse">
+                <div className="h-6 bg-gray-600 rounded w-20"></div>
+              </div>
+            ) : (
+              walletAge
+            )}
+          </div>
+        </div>
+
+        <div className="text-right">
+          <div className="flex items-center space-x-2 mb-2">
+            <FaArrowUp className="text-gray-400 w-4 h-4" />
+            <span className="text-gray-400 text-sm">Transaction Count</span>
+          </div>
+          <div className="text-2xl font-bold text-white">
+            {isLoading ? (
+              <div className="animate-pulse">
+                <div className="h-6 bg-gray-600 rounded w-16"></div>
+              </div>
+            ) : (
+              transactionCount.toLocaleString()
+            )}
+          </div>
         </div>
       </div>
     </div>

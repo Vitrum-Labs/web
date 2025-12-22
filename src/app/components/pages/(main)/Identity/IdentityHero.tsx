@@ -1,8 +1,8 @@
 "use client";
 
-import { FC } from "react";
 import Image from "next/image";
-import { IdentityHeroProps } from "./types";
+import type { FC } from "react";
+import type { IdentityHeroProps } from "./types";
 
 const IdentityHero: FC<IdentityHeroProps> = ({
   percentage = 74,

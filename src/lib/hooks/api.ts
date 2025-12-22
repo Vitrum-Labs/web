@@ -9,7 +9,7 @@ class ApiClient {
 
   private async request<T>(endpoint: string): Promise<ApiResponse<T>> {
     const url = `${this.baseUrl}/api${endpoint}`;
-    
+
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -24,13 +24,17 @@ class ApiClient {
     return response.json();
   }
 
-  async getReputationQuick(walletAddress: string): Promise<ReputationQuickData> {
-    const response = await this.request<ReputationQuickData>(`/reputation/${walletAddress}/quick`);
-    
+  async getReputationQuick(
+    walletAddress: string,
+  ): Promise<ReputationQuickData> {
+    const response = await this.request<ReputationQuickData>(
+      `/reputation/${walletAddress}/quick`,
+    );
+
     if (!response.success) {
       throw new Error(response.message || "API request failed");
     }
-    
+
     return response.data;
   }
 }

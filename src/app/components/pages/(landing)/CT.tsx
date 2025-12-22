@@ -1,7 +1,6 @@
 "use client";
-import { Inter } from "next/font/google";
 import { motion } from "framer-motion";
-import { JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 const mono = JetBrains_Mono({ subsets: ["latin"] });

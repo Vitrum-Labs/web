@@ -1,8 +1,8 @@
 "use client";
 
-import { FC } from "react";
+import type { FC } from "react";
 import { FaFingerprint } from "react-icons/fa";
-import { VitrumIdentityProps } from "./types";
+import type { VitrumIdentityProps } from "./types";
 
 const VitrumIdentity: FC<VitrumIdentityProps> = ({
   title = "Vitrum Identity",

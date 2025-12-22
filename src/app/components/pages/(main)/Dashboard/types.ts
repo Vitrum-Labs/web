@@ -1,5 +1,5 @@
 import {
-  ActionCard,
+  type ActionCard,
   ReputationData,
   UserWallet,
 } from "../../../../types/domain";

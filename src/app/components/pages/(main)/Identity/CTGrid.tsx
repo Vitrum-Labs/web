@@ -1,8 +1,8 @@
 "use client";
 
-import { FC } from "react";
+import type { FC } from "react";
+import type { CTInfluencer } from "../../../../types/domain";
 import CTCard from "./CTCard";
-import { CTInfluencer } from "../../../../types/domain";
 
 const CTGrid: FC = () => {
   const influencers: CTInfluencer[] = [
