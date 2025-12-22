@@ -2,6 +2,7 @@
 
 import type { FC } from "react";
 import { FaSync } from "react-icons/fa";
+import { useAccount } from "wagmi";
 import { useReputationQuick } from "../../../../../lib/hooks";
 import Navbar from "../../../ui/Navbar";
 import ReputationCard from "./ReputationCard";
@@ -9,12 +10,18 @@ import ReputationGatedActions from "./ReputationGatedActions";
 import VitrumIdentity from "./VitrumIdentity";
 
 const Dashboard: FC = () => {
+  const { address } = useAccount();
   const {
     data: reputationData,
     isLoading,
     error,
     refetch,
   } = useReputationQuick();
+
+  const formatAddress = (addr?: string) => {
+    if (!addr) return "User";
+    return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+  };
 
   const getRankFromScore = (score: number): string => {
     return score >= 100 ? "Eligible to Vote" : "Not Eligible to Vote";
@@ -40,7 +47,7 @@ const Dashboard: FC = () => {
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">
-              Welcome back, User
+              Welcome back, <span className="text-xl text-gray-400">{formatAddress(address)}</span>
             </h1>
             <p className="text-[#898989]">
               Manage your onchain identity and reputation

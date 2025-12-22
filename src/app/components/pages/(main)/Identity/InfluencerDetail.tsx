@@ -12,6 +12,7 @@ import {
   FaThumbsUp,
 } from "react-icons/fa6";
 import type { CTInfluencer } from "../../../../types/domain";
+import { useInfluencerDetail } from "../../../../../lib/hooks/useInfluencerDetail";
 import Navbar from "../../../ui/Navbar";
 
 interface InfluencerDetailProps {
@@ -20,64 +21,44 @@ interface InfluencerDetailProps {
 
 const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
   const [userVote, setUserVote] = useState<"Bullish" | "Bearish" | null>(null);
+  const { influencer, isLoading, error } = useInfluencerDetail(id);
 
-  const influencers: CTInfluencer[] = [
-    {
-      id: "1",
-      name: "Daniel Ortega",
-      image: "/assets/landing/ct-images/daniel-ortega.jpg",
-      bullishPercentage: 65,
-      bearishPercentage: 35,
-      sentiment: "Bullish",
-    },
-    {
-      id: "2",
-      name: "Jesse Polak",
-      image: "/assets/landing/ct-images/jessepolak.jpg",
-      bullishPercentage: 72,
-      bearishPercentage: 28,
-      sentiment: "Bullish",
-    },
-    {
-      id: "3",
-      name: "Max",
-      image: "/assets/landing/ct-images/max.jpg",
-      bullishPercentage: 58,
-      bearishPercentage: 42,
-      sentiment: "Bullish",
-    },
-    {
-      id: "4",
-      name: "Tony",
-      image: "/assets/landing/ct-images/tony.jpg",
-      bullishPercentage: 45,
-      bearishPercentage: 55,
-      sentiment: "Bearish",
-    },
-    {
-      id: "5",
-      name: "Nett0",
-      image: "/assets/landing/ct-images/nett0.jpg",
-      bullishPercentage: 68,
-      bearishPercentage: 32,
-      sentiment: "Bullish",
-    },
-    {
-      id: "6",
-      name: "Tory Dom",
-      image: "/assets/landing/ct-images/tory-dom.jpg",
-      bullishPercentage: 61,
-      bearishPercentage: 39,
-      sentiment: "Bullish",
-    },
-  ];
+  const ctInfluencer = useMemo(() => {
+    if (!influencer) return null;
+    const bullishPercentage = Math.floor(Math.random() * 40) + 50;
+    const bearishPercentage = 100 - bullishPercentage;
+    
+    return {
+      id: influencer.id,
+      name: influencer.name,
+      image: influencer.profileImage,
+      bullishPercentage,
+      bearishPercentage,
+      sentiment: bullishPercentage > 50 ? "Bullish" : "Bearish",
+    } as CTInfluencer;
+  }, [influencer]);
 
-  const influencer = useMemo(() => {
-    return influencers.find((inf) => inf.id === id) || influencers[0];
-  }, [id, influencers]);
+  if (isLoading || !influencer || !ctInfluencer) {
+    return (
+      <div className="min-h-screen" style={{ backgroundColor: "#151515" }}>
+        <Navbar />
+        <main className="max-w-7xl mx-auto px-6 py-8">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-600 rounded mb-4 w-32"></div>
+            <div className="h-64 bg-gray-600 rounded mb-6"></div>
+            <div className="space-y-4">
+              <div className="h-4 bg-gray-600 rounded"></div>
+              <div className="h-4 bg-gray-600 rounded"></div>
+              <div className="h-4 bg-gray-600 rounded w-3/4"></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
-  const bullishVotes = Math.round((influencer.bullishPercentage / 100) * 1980);
-  const bearishVotes = Math.round((influencer.bearishPercentage / 100) * 1980);
+  const bullishVotes = Math.round((ctInfluencer.bullishPercentage / 100) * 1980);
+  const bearishVotes = Math.round((ctInfluencer.bearishPercentage / 100) * 1980);
   const totalVotes = bullishVotes + bearishVotes;
 
   return (
@@ -104,7 +85,7 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
             <div className="flex items-center space-x-4 mb-6">
               <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-gray-600">
                 <Image
-                  src={influencer.image}
+                  src={influencer.profileImage}
                   alt={influencer.name}
                   fill
                   className="object-cover"
@@ -115,8 +96,40 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
                   {influencer.name}
                 </h1>
                 <p className="text-gray-400">
-                  @{influencer.name.toLowerCase().replace(/\s+/g, "")}
+                  {influencer.walletAddress.slice(0, 6)}...{influencer.walletAddress.slice(-4)}
                 </p>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <p className="text-gray-300 leading-relaxed">
+                {influencer.bio}
+              </p>
+            </div>
+
+            {Object.keys(influencer.socialLinks).length > 0 && (
+              <div className="mb-6">
+                <h3 className="text-white font-medium mb-3">Social Links</h3>
+                <div className="flex flex-wrap gap-2">
+                  {Object.entries(influencer.socialLinks).map(([platform, link]) => (
+                    <a
+                      key={platform}
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cursor-pointer bg-[#2a2a2a] text-gray-300 px-3 py-1 rounded-full text-sm hover:bg-[#333333] transition-colors capitalize"
+                    >
+                      {platform}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="mb-6">
+              <div className="flex items-center justify-between text-sm text-gray-400">
+                <span>Total Reviews</span>
+                <span>{influencer.totalReviews}</span>
               </div>
             </div>
 
@@ -157,7 +170,7 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
               <div className="flex items-start justify-between">
                 <div>
                   <div className="text-6xl font-bold text-white mb-2">
-                    {influencer.bullishPercentage}%{" "}
+                    {ctInfluencer.bullishPercentage}%{" "}
                     <span className="text-2xl">Bullish</span>
                   </div>
                 </div>
@@ -205,7 +218,7 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
 
                 <div className="text-right">
                   <div className="text-6xl font-bold text-white mb-2">
-                    {influencer.bearishPercentage}%{" "}
+                    {ctInfluencer.bearishPercentage}%{" "}
                     <span className="text-2xl">Bearish</span>
                   </div>
                 </div>

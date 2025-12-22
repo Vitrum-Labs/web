@@ -2,59 +2,60 @@
 
 import type { FC } from "react";
 import type { CTInfluencer } from "../../../../types/domain";
+import { useAllInfluencers, type Influencer } from "../../../../../lib/hooks/useAllInfluencers";
 import CTCard from "./CTCard";
 
 const CTGrid: FC = () => {
-  const influencers: CTInfluencer[] = [
-    {
-      id: "1",
-      name: "Daniel Ortega",
-      image: "/assets/landing/ct-images/daniel-ortega.jpg",
-      bullishPercentage: 65,
-      bearishPercentage: 35,
-      sentiment: "Bullish",
-    },
-    {
-      id: "2",
-      name: "Jesse Polak",
-      image: "/assets/landing/ct-images/jessepolak.jpg",
-      bullishPercentage: 72,
-      bearishPercentage: 28,
-      sentiment: "Bullish",
-    },
-    {
-      id: "3",
-      name: "Max",
-      image: "/assets/landing/ct-images/max.jpg",
-      bullishPercentage: 58,
-      bearishPercentage: 42,
-      sentiment: "Bullish",
-    },
-    {
-      id: "4",
-      name: "Tony",
-      image: "/assets/landing/ct-images/tony.jpg",
-      bullishPercentage: 45,
-      bearishPercentage: 55,
-      sentiment: "Bearish",
-    },
-    {
-      id: "5",
-      name: "Nett0",
-      image: "/assets/landing/ct-images/nett0.jpg",
-      bullishPercentage: 68,
-      bearishPercentage: 32,
-      sentiment: "Bullish",
-    },
-    {
-      id: "6",
-      name: "Tory Dom",
-      image: "/assets/landing/ct-images/tory-dom.jpg",
-      bullishPercentage: 61,
-      bearishPercentage: 39,
-      sentiment: "Bullish",
-    },
-  ];
+  const { influencers: apiInfluencers, isLoading, error } = useAllInfluencers();
+
+  const mapToCtInfluencer = (influencer: Influencer): CTInfluencer => {
+    const bullishPercentage = Math.floor(Math.random() * 40) + 50;
+    const bearishPercentage = 100 - bullishPercentage;
+    
+    return {
+      id: influencer.id,
+      name: influencer.name,
+      image: influencer.profileImage,
+      bullishPercentage,
+      bearishPercentage,
+      sentiment: bullishPercentage > 50 ? "Bullish" : "Bearish",
+    };
+  };
+
+  const influencers = apiInfluencers.map(mapToCtInfluencer);
+
+  if (isLoading) {
+    return (
+      <div>
+        <h2 className="text-2xl font-bold text-white mb-6">
+          Crypto Twitter Sentiment
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="bg-[#1a1a1a] rounded-xl p-6 animate-pulse">
+              <div className="w-16 h-16 bg-gray-600 rounded-full mx-auto mb-4"></div>
+              <div className="h-4 bg-gray-600 rounded mb-2"></div>
+              <div className="h-2 bg-gray-600 rounded mb-4"></div>
+              <div className="h-8 bg-gray-600 rounded"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div>
+        <h2 className="text-2xl font-bold text-white mb-6">
+          Crypto Twitter Sentiment
+        </h2>
+        <div className="text-red-400 text-center py-8">
+          Failed to load influencers: {error}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
