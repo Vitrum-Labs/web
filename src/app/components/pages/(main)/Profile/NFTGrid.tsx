@@ -5,7 +5,7 @@ import type { NFTGridProps } from "./Profiletypes";
 import NFTCard from "./NFTCard";
 import { useReputationQuick } from "../../../../../lib/hooks/useReputationQuick";
 
-const NFTGrid: FC<NFTGridProps> = ({ nftCount = 1 }) => {
+const NFTGrid: FC<NFTGridProps> = ({ nftCount = 1, hasNFT }) => {
   const { data: reputationData, isLoading, error } = useReputationQuick();
 
   return (
@@ -16,7 +16,7 @@ const NFTGrid: FC<NFTGridProps> = ({ nftCount = 1 }) => {
         borderColor: "#323232",
       }}
     >
-      <h2 className="text-xl font-bold text-white mb-6 flex items-center justify-center">
+      <h2 className="text-2xl font-medium font-mono text-white mb-6 flex items-center justify-center">
         Onchain Reputation Score NFT
       </h2>
 
@@ -27,6 +27,7 @@ const NFTGrid: FC<NFTGridProps> = ({ nftCount = 1 }) => {
             maxScore={1000}
             onMintNFT={() => console.log('Mint NFT clicked')}
             isLoading={isLoading}
+            hasNFT={hasNFT}
           />
         </div>
       </div>

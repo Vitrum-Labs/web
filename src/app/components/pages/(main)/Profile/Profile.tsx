@@ -2,7 +2,7 @@
 
 import type { FC } from "react";
 import { useAccount } from "wagmi";
-import { useReputationQuick } from "../../../../../lib/hooks";
+import { useReputationQuick, useHasIdentity } from "../../../../../lib/hooks";
 import Navbar from "../../../ui/Navbar";
 import NFTGrid from "./NFTGrid";
 import UserProfileCard from "./UserProfileCard";
@@ -10,6 +10,7 @@ import UserProfileCard from "./UserProfileCard";
 const Profile: FC = () => {
   const { address } = useAccount();
   const { data: reputationData, isLoading, error } = useReputationQuick();
+  const { data: hasNFT } = useHasIdentity();
 
   const getRankFromScore = (score: number): string => {
     return score >= 100 ? "ELIGIBLE TO VOTE" : "NOT ELIGIBLE TO VOTE";
@@ -39,7 +40,7 @@ const Profile: FC = () => {
           transactionCount={reputationData?.totalTransactions || 0}
           isLoading={isLoading}
         />
-        <NFTGrid />
+        <NFTGrid hasNFT={hasNFT as boolean} />
       </main>
     </div>
   );

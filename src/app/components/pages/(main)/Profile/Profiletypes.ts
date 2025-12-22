@@ -14,4 +14,5 @@ export interface UserProfileCardProps {
 
 export interface NFTGridProps {
   nftCount?: number;
+  hasNFT?: boolean;
 }
