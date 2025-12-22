@@ -35,7 +35,9 @@ export function useVoteInfluencer() {
       if (!response.ok) {
         const errorData = await response.json().catch(() => null);
         console.log('Error response:', errorData);
-        throw new Error(errorData?.message || `HTTP ${response.status}: ${response.statusText}`);
+        const errorMessage = errorData?.message || errorData?.error || `HTTP ${response.status}: ${response.statusText}`;
+        setError(errorMessage);
+        return false;
       }
 
       const result: VoteResponse = await response.json();

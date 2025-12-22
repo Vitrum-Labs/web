@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { type FC, useMemo, useState } from "react";
+import { type FC, useMemo, useState, useEffect } from "react";
 import { useAccount } from "wagmi";
+import { toast } from "sonner";
 import {
   FaArrowLeft,
   FaArrowTrendDown,
   FaArrowTrendUp,
-  FaChartBar,
+  FaUsers,
   FaRegCommentDots,
   FaThumbsDown,
   FaThumbsUp,
@@ -31,9 +32,36 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
   const [showVoteForm, setShowVoteForm] = useState(false);
   const { influencer, isLoading, error } = useInfluencerDetail(id);
   const { submitVote: submitReview, isLoading: isReviewing, error: reviewError } = useVoteInfluencer();
-  const { submitVote: submitVoteOnly, isLoading: isVoting, error: voteError } = useVoteOnInfluencer();
+  const { submitVote: submitVoteOnly, isLoading: isVoting, error: voteError, clearError: clearVoteError } = useVoteOnInfluencer();
   const { stats, isLoading: statsLoading, refetch: refetchStats } = useInfluencerStats(id);
   const { reviews, count: reviewCount, isLoading: reviewsLoading, refetch: refetchReviews } = useInfluencerReviews(id);
+
+  useEffect(() => {
+    if (voteError) {
+      toast.error(voteError, {
+        duration: 5000,
+        style: {
+          background: '#1f1f1f',
+          border: '1px solid #ef4444',
+          color: '#ffffff',
+        },
+      });
+      clearVoteError();
+    }
+  }, [voteError, clearVoteError]);
+
+  useEffect(() => {
+    if (reviewError) {
+      toast.error(reviewError, {
+        duration: 5000,
+        style: {
+          background: '#1f1f1f',
+          border: '1px solid #ef4444',
+          color: '#ffffff',
+        },
+      });
+    }
+  }, [reviewError]);
 
   const ctInfluencer = useMemo(() => {
     if (!influencer) return null;
@@ -80,6 +108,14 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
     });
 
     if (success) {
+      toast.success(`Vote "${sentiment.toLowerCase()}" recorded successfully!`, {
+        duration: 3000,
+        style: {
+          background: '#1f1f1f',
+          border: '1px solid #22c55e',
+          color: '#ffffff',
+        },
+      });
       refetchStats();
       refetchReviews();
     }
@@ -99,6 +135,14 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
     });
 
     if (success) {
+      toast.success("Review submitted successfully!", {
+        duration: 3000,
+        style: {
+          background: '#1f1f1f',
+          border: '1px solid #22c55e',
+          color: '#ffffff',
+        },
+      });
       setShowVoteForm(false);
       setComment("");
       refetchReviews();
@@ -194,17 +238,8 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
                 <span>{influencer.totalReviews}</span>
               </div>
             </div>
-
-            <p className="text-gray-400 leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
           </div>
+
 
           <div className="space-y-4">
             <div
@@ -215,7 +250,7 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
               }}
             >
               <div className="flex items-center space-x-2">
-                <FaChartBar className="text-gray-400 w-5 h-5" />
+                <FaUsers className="text-gray-400 w-5 h-5" />
                 <span className="text-white font-medium">
                   {statsLoading ? "..." : `${totalVotes} Total Votes`}
                 </span>
@@ -318,11 +353,6 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
               Add Review for {influencer.name}
             </h2>
 
-            {reviewError && (
-              <div className="mb-4 p-3 bg-red-900/20 border border-red-500/30 rounded-lg text-red-300">
-                {reviewError}
-              </div>
-            )}
 
             <div className="mb-6">
               <label className="block text-white font-medium mb-2">Your Review</label>

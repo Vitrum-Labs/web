@@ -23,6 +23,8 @@ export function useVoteOnInfluencer() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const clearError = () => setError(null);
+
   const submitVote = async (voteData: VoteData): Promise<boolean> => {
     setIsLoading(true);
     setError(null);
@@ -39,7 +41,9 @@ export function useVoteOnInfluencer() {
       const result: VoteResponse = await response.json();
 
       if (!response.ok || !result.success) {
-        throw new Error(result.error || result.message || `HTTP ${response.status}: ${response.statusText}`);
+        const errorMessage = result.error || result.message || `HTTP ${response.status}: ${response.statusText}`;
+        setError(errorMessage);
+        return false;
       }
 
       return true;
@@ -57,5 +61,6 @@ export function useVoteOnInfluencer() {
     submitVote,
     isLoading,
     error,
+    clearError,
   };
 }
