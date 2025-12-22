@@ -3,6 +3,7 @@
 import { FC, useState } from "react";
 import Image from "next/image";
 import { CTCardProps } from "./types";
+import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
 
 const CTCard: FC<CTCardProps> = ({
   id,
@@ -26,69 +27,54 @@ const CTCard: FC<CTCardProps> = ({
         borderColor: "#323232",
       }}
     >
-      <div className="flex justify-center mb-4">
-        <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-gray-600">
-          <Image
-            src={image}
-            alt={name}
-            fill
-            className="object-cover"
-          />
-        </div>
+      <div className="absolute inset-0 opacity-10">
+        <Image
+          src={image}
+          alt={name}
+          fill
+          className="object-cover"
+        />
       </div>
-
-      <div className="text-center mb-4">
-        <h3 className="text-lg font-bold text-white">{name}</h3>
-      </div>
-
-      <div className="mb-4">
-        <div className="w-full bg-gray-800 rounded-full h-2 mb-2">
-          <div className="flex h-2 rounded-full overflow-hidden">
-            <div 
-              className="bg-green-500 transition-all duration-300"
-              style={{ width: `${bullishPercentage}%` }}
-            ></div>
-            <div 
-              className="bg-red-500 transition-all duration-300"
-              style={{ width: `${bearishPercentage}%` }}
-            ></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+      <div className="relative z-10">
+        <div className="flex justify-center mb-4">
+          <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-gray-600">
+            <Image
+              src={image}
+              alt={name}
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
 
-        <div className="flex justify-between text-xs text-gray-400">
-          <span>{bullishPercentage}% Bullish</span>
-          <span>{bearishPercentage}% Bearish</span>
+        <div className="text-center mb-4">
+          <h3 className="text-lg font-bold text-white">{name}</h3>
         </div>
-      </div>
 
-      <div className="space-y-2">
-        <div className="flex space-x-2">
-          <button
-            onClick={() => handleVote("Bullish")}
-            className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
-              userVote === "Bullish" 
-                ? 'bg-green-600 text-white' 
-                : 'bg-green-900/30 text-green-400 hover:bg-green-900/50'
-            }`}
-          >
-            🐂 Bullish
-          </button>
-          
-          <button
-            onClick={() => handleVote("Bearish")}
-            className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
-              userVote === "Bearish" 
-                ? 'bg-red-600 text-white' 
-                : 'bg-red-900/30 text-red-400 hover:bg-red-900/50'
-            }`}
-          >
-            🐻 Bearish
-          </button>
+        <div className="mb-4">
+          <div className="w-full bg-gray-800 rounded-full h-2 mb-2">
+            <div className="flex h-2 rounded-full overflow-hidden">
+              <div 
+                className="bg-green-500 transition-all duration-300"
+                style={{ width: `${bullishPercentage}%` }}
+              ></div>
+              <div 
+                className="bg-red-500 transition-all duration-300"
+                style={{ width: `${bearishPercentage}%` }}
+              ></div>
+            </div>
+          </div>
+
+          <div className="flex justify-between text-xs text-gray-400">
+            <span>{bullishPercentage}% Bullish</span>
+            <span>{bearishPercentage}% Bearish</span>
+          </div>
         </div>
-        
+
         <button
           onClick={() => window.location.href = `/app/identity/${id}`}
-          className="w-full py-2 px-3 rounded-lg text-sm font-medium bg-gray-800 text-gray-300 hover:bg-gray-700 transition-colors"
+          className="w-full py-2 px-3 rounded-lg text-sm font-medium bg-white text-black hover:bg-gray-200 transition-colors cursor-pointer"
         >
           View Details
         </button>
