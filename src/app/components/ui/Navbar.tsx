@@ -3,10 +3,12 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useDisconnect } from "wagmi";
 import type { FC } from "react";
 
 const Navbar: FC = () => {
   const pathname = usePathname();
+  const { disconnect } = useDisconnect();
 
   const navItems = [
     { label: "Dashboard", href: "/app/dashboard" },
@@ -52,7 +54,6 @@ const Navbar: FC = () => {
               account,
               openAccountModal,
               openConnectModal,
-              disconnect,
               authenticationStatus,
               mounted,
             }) => {
