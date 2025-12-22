@@ -4,7 +4,7 @@ import { FC, useState, useMemo } from "react";
 import Image from "next/image";
 import Navbar from "../../../ui/Navbar";
 import { CTInfluencer } from "../../../../types/domain";
-import { FaChartBar, FaArrowTrendUp, FaArrowTrendDown, FaThumbsUp, FaThumbsDown, FaRegCommentDots } from "react-icons/fa6";
+import { FaChartBar, FaArrowTrendUp, FaArrowTrendDown, FaThumbsUp, FaThumbsDown, FaRegCommentDots, FaArrowLeft } from "react-icons/fa6";
 
 interface InfluencerDetailProps {
   id: string;
@@ -77,6 +77,14 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
       <Navbar />
       
       <main className="max-w-7xl mx-auto px-6 py-8">
+        <button
+          onClick={() => window.history.back()}
+          className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors mb-6 cursor-pointer"
+        >
+          <FaArrowLeft className="w-4 h-4" />
+          <span>Back</span>
+        </button>
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div 
             className="border rounded-xl p-8"
@@ -142,7 +150,7 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
                 <div className="text-right">
                   <button
                     onClick={() => setUserVote("Bullish")}
-                    className="flex items-center space-x-2 px-4 py-2 bg-transparent border border-white rounded-lg text-white text-sm font-medium hover:bg-white hover:text-black transition-colors mb-2"
+                    className="flex items-center space-x-2 px-4 py-2 bg-transparent border border-white rounded-lg text-white text-sm font-medium hover:bg-white hover:text-black transition-colors mb-2 cursor-pointer"
                   >
                     <FaArrowTrendUp className="w-4 h-4" />
                     <span>Vote Bullish</span>
@@ -173,7 +181,7 @@ const InfluencerDetail: FC<InfluencerDetailProps> = ({ id }) => {
                 <div>
                   <button
                     onClick={() => setUserVote("Bearish")}
-                    className="flex items-center space-x-2 px-4 py-2 bg-transparent border border-white rounded-lg text-white text-sm font-medium hover:bg-white hover:text-black transition-colors mb-2"
+                    className="flex items-center space-x-2 px-4 py-2 bg-transparent border border-white rounded-lg text-white text-sm font-medium hover:bg-white hover:text-black transition-colors mb-2 cursor-pointer"
                   >
                     <FaArrowTrendDown className="w-4 h-4" />
                     <span>Vote Bearish</span>
