@@ -1,6 +1,6 @@
 export const CONTRACTS = {
-  VitrumIdentity: '0x965120a559B5b6b249dD70998cc56aBe9723FCc9',
-  VitrumVote: '0x5Eb3Ff455862c5C7C80E8AcD8274B31ea7cE7495',
+  VitrumIdentity: '0xB25c93f98e05a3db58fae281c9226281D2C1078D',
+  VitrumVote: '0x310869f0312a0A0c607e2D5BdF57F4a1aaBed1A2',
 } as const;
 
 export type ContractName = keyof typeof CONTRACTS;

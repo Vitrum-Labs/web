@@ -399,4 +399,4 @@ export const VitrumIdentityABI = [
     stateMutability: "nonpayable",
     type: "function",
   },
-];
+] as const;

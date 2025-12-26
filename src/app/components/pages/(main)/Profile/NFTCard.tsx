@@ -25,6 +25,8 @@ const NFTCard: FC<NFTCardProps> = ({
   const { mintIdentity, isLoading, uploadProgress, error, txConfirmed } = useMintIdentity();
 
   const userHasNFT = hasNFT || hasIdentity;
+  
+  console.log('Debug NFT Card:', { hasNFT, hasIdentity, userHasNFT, address });
 
   const handleMintNFT = async () => {
     if (!cardRef.current || isLoading) return;

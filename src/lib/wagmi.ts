@@ -9,7 +9,8 @@ export const wagmiConfig = getDefaultConfig({
     "your-wallet-connect-project-id",
   chains: [arbitrumSepolia],
   transports: {
-    [arbitrumSepolia.id]: http("https://arbitrum-sepolia-testnet.api.pocket.network"),
+    [arbitrumSepolia.id]: http("https://arb-sepolia.g.alchemy.com/v2/khrP0RS5TnTQxZPuH0i-E"),
   },
   ssr: true,
 });
+

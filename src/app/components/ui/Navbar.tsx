@@ -3,12 +3,32 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useDisconnect } from "wagmi";
+import { useDisconnect, useAccount, useChainId, useSwitchChain } from "wagmi";
+import { useEffect } from "react";
+import { arbitrumSepolia } from "wagmi/chains";
 import type { FC } from "react";
 
 const Navbar: FC = () => {
   const pathname = usePathname();
   const { disconnect } = useDisconnect();
+  const { address, isConnected } = useAccount();
+  const chainId = useChainId();
+  const { switchChain } = useSwitchChain();
+
+  useEffect(() => {
+    const handleNetworkSwitch = async () => {
+      if (isConnected && chainId !== arbitrumSepolia.id) {
+        console.log('Auto-switching to Arbitrum Sepolia...');
+        try {
+          await switchChain({ chainId: arbitrumSepolia.id });
+        } catch (error) {
+          console.error('Failed to switch to Arbitrum Sepolia:', error);
+        }
+      }
+    };
+
+    handleNetworkSwitch();
+  }, [isConnected, chainId, switchChain]);
 
   const navItems = [
     { label: "Dashboard", href: "/app/dashboard" },

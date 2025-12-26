@@ -73,6 +73,26 @@ export function useMintIdentity() {
         isMinting: true,
       }));
 
+      console.log('About to call mintIdentity with:', {
+        contractAddress: CONTRACTS.VitrumIdentity,
+        metadataUri,
+        score: BigInt(score),
+      });
+
+      // Debug ABI and function
+      const mintFunction = VitrumIdentityABI.find((item: any) => 
+        item.type === 'function' && item.name === 'mintIdentity'
+      );
+      
+      console.log('Contract call params:', {
+        address: CONTRACTS.VitrumIdentity,
+        abiLength: VitrumIdentityABI.length,
+        mintFunctionExists: !!mintFunction,
+        mintFunction,
+        functionName: 'mintIdentity',
+        args: [metadataUri, BigInt(score)],
+      });
+
       writeContract({
         address: CONTRACTS.VitrumIdentity,
         abi: VitrumIdentityABI,
