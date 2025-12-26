@@ -7,7 +7,7 @@ export function useCheckIdentity(address?: string) {
     address: CONTRACTS.VitrumIdentity,
     abi: VitrumIdentityABI,
     functionName: 'hasIdentity',
-    args: address ? [address] : undefined,
+    args: address ? [address as `0x${string}`] : undefined,
     query: {
       enabled: !!address,
     }

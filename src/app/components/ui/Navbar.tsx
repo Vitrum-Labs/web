@@ -1,16 +1,15 @@
 "use client";
 
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import ConnectWalletDynamic from "./ConnectWalletDynamic";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useDisconnect, useAccount, useChainId, useSwitchChain } from "wagmi";
+import { useAccount, useChainId, useSwitchChain } from "wagmi";
 import { useEffect } from "react";
 import { arbitrumSepolia } from "wagmi/chains";
 import type { FC } from "react";
 
 const Navbar: FC = () => {
   const pathname = usePathname();
-  const { disconnect } = useDisconnect();
   const { address, isConnected } = useAccount();
   const chainId = useChainId();
   const { switchChain } = useSwitchChain();
@@ -69,46 +68,7 @@ const Navbar: FC = () => {
         </div>
 
         <div className="flex items-center">
-          <ConnectButton.Custom>
-            {({
-              account,
-              openAccountModal,
-              openConnectModal,
-              authenticationStatus,
-              mounted,
-            }) => {
-              const ready = mounted && authenticationStatus !== 'loading';
-              const connected = ready && account;
-
-              return (
-                <div {...(!ready && { 'aria-hidden': true, style: { opacity: 0 } })}>
-                  {!connected ? (
-                    <button
-                      onClick={openConnectModal}
-                      className="bg-black text-white px-4 py-2 rounded-full text-sm cursor-pointer hover:bg-gray-800 transition-colors"
-                    >
-                      Connect Wallet
-                    </button>
-                  ) : (
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={openAccountModal}
-                        className="bg-black text-white px-4 py-2 rounded-full text-sm font-mono cursor-pointer hover:bg-gray-800 transition-colors"
-                      >
-                        {account.displayName}
-                      </button>
-                      <button
-                        onClick={disconnect}
-                        className="bg-red-600 text-white px-3 py-2 rounded-full text-sm cursor-pointer hover:bg-red-700 transition-colors"
-                      >
-                        Disconnect
-                      </button>
-                    </div>
-                  )}
-                </div>
-              );
-            }}
-          </ConnectButton.Custom>
+          <ConnectWalletDynamic />
         </div>
       </div>
     </nav>

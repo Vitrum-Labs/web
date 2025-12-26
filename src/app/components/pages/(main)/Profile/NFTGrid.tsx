@@ -25,8 +25,6 @@ const NFTGrid: FC<NFTGridProps> = ({ nftCount = 1, hasNFT }) => {
           <NFTCard
             reputationScore={reputationData?.score || 0}
             maxScore={1000}
-            onMintNFT={() => console.log('Mint NFT clicked')}
-            isLoading={isLoading}
             hasNFT={hasNFT}
           />
         </div>
