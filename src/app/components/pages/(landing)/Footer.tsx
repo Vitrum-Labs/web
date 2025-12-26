@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import { JetBrains_Mono } from "next/font/google";
 import animationData from "../../../../../public/assets/landing/animation/MCpepe.json";
-
+import Link from "next/link";
 const mono = JetBrains_Mono({ subsets: ["latin"] });
 
 export default function Footer() {
@@ -77,39 +77,41 @@ export default function Footer() {
             </motion.span>
           </motion.h1>
 
-          <motion.button
-            className="bg-black text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-gray-800 transition-colors duration-300 inline-flex items-center gap-3"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 1.3 }}
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <motion.span
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
+          <Link href="/app/dashboard">
+            <motion.button
+              className="cursor-pointer bg-black text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-gray-800 transition-colors duration-300 inline-flex items-center gap-3"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 1.5 }}
+              transition={{ duration: 0.6, delay: 1.3 }}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Launch App
-            </motion.span>
-            <motion.svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 1.7 }}
-              whileHover={{ x: 5 }}
-            >
-              <path d="m9 18 6-6-6-6" />
-            </motion.svg>
-          </motion.button>
+              <motion.span
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 1.5 }}
+              >
+                Launch App
+              </motion.span>
+              <motion.svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 1.7 }}
+                whileHover={{ x: 5 }}
+              >
+                <path d="m9 18 6-6-6-6" />
+              </motion.svg>
+            </motion.button>
+          </Link>
         </motion.div>
       </motion.div>
     </section>
